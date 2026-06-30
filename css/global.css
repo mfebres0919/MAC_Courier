@@ -270,7 +270,9 @@ h6 { font-size: var(--fs-h6); }
 }
 
 /* Green accent inside a heading — e.g. <span class="accent"> */
-.accent { color: var(--green); }
+.accent { color: var(--green-ink); }
+
+.accent-2 { color: var(--green); }
 
 p {
   font-family: var(--font-body);

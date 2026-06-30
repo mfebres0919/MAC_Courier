@@ -218,3 +218,25 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', onScroll, { passive: true });
   update();
 })();
+
+
+/* ===========================================================================
+   COVERAGE TABS — switch the card panel (Where We Go / Live Tracking / Beyond)
+=========================================================================== */
+(function () {
+  var tabs = document.querySelectorAll('.cov-tab');
+  if (!tabs.length) return;
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var id = tab.getAttribute('data-tab');
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      document.querySelectorAll('.cov-panel').forEach(function (p) {
+        p.classList.toggle('active', p.getAttribute('data-panel') === id);
+      });
+    });
+  });
+})();

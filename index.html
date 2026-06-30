@@ -22,6 +22,10 @@
      1. global.css — tokens, reset, typography, layout, buttons, nav, animations
      2. styles.css — homepage-specific styles
   ====================================================================== -->
+  <!-- Leaflet (interactive map — free OpenStreetMap/CARTO tiles, no API key) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -251,7 +255,7 @@
           </p>
 
           <h1 class="hero-heading">
-            We Move <span class="accent">Atlanta Business.</span>
+            We Move <span class="accent-2">Atlanta Business.</span>
           </h1>
 
           <p class="hero-body">
@@ -373,7 +377,7 @@
         <div class="services-head">
           <div class="services-head-copy reveal fade-up">
             <p class="eyebrow">What We Move</p>
-            <h2>Delivery Services <span class="accent">Built for Speed</span></h2>
+            <h2>Delivery Services <span class="accent accent-2">Built for Speed</span></h2>
             <p>From hospitals to law firms to warehouses — we move what Metro Atlanta
                businesses can't afford to be late on, with the right care for every load.</p>
           </div>
@@ -399,7 +403,7 @@
           <!-- Medical Courier -->
           <article class="service-card reveal fade-up">
             <div class="service-card-media">
-              <img src="images/hero-2.png" alt="Medical courier with secured packages" width="400" height="300" loading="lazy" decoding="async">
+              <img src="images/service-1.png" alt="Medical courier with secured packages" width="400" height="300" loading="lazy" decoding="async">
               <span class="service-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
@@ -421,7 +425,7 @@
           <!-- Legal Documents -->
           <article class="service-card reveal fade-up delay-1">
             <div class="service-card-media">
-              <img src="images/hero-3.png" alt="Legal documents prepared for delivery" width="400" height="300" loading="lazy" decoding="async">
+              <img src="images/service-2.png" alt="Legal documents prepared for delivery" width="400" height="300" loading="lazy" decoding="async">
               <span class="service-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.4 48.4 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.99 5.99 0 0 1-2.031.352 5.99 5.99 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.99 5.99 0 0 1-2.031.352 5.99 5.99 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z"/>
@@ -443,7 +447,7 @@
           <!-- Rush & On-Demand -->
           <article class="service-card reveal fade-up delay-2">
             <div class="service-card-media">
-              <img src="images/hero-1.png" alt="Rush delivery van loading on demand" width="400" height="300" loading="lazy" decoding="async">
+              <img src="images/service-3.png" alt="Rush delivery van loading on demand" width="400" height="300" loading="lazy" decoding="async">
               <span class="service-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/>
@@ -465,7 +469,7 @@
           <!-- Corporate Logistics -->
           <article class="service-card reveal fade-up delay-3">
             <div class="service-card-media">
-              <img src="images/hero-3.png" alt="Corporate logistics team coordinating deliveries" width="400" height="300" loading="lazy" decoding="async">
+              <img src="images/service-4.png" alt="Corporate logistics team coordinating deliveries" width="400" height="300" loading="lazy" decoding="async">
               <span class="service-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>
@@ -474,8 +478,30 @@
             </div>
             <div class="service-card-body">
               <h3 class="service-card-title">Corporate Logistics</h3>
-              <p class="service-card-text">Scheduled routes, inter-office transfers, and recurring B2B deliveries that keep your operation moving.</p>
+              <p class="service-card-text">Inter-office transfers, supply runs, and dedicated account support for businesses that ship every day.</p>
               <a href="services.html#corporate" class="service-card-btn">
+                View Service
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Scheduled Routes -->
+          <article class="service-card reveal fade-up delay-4">
+            <div class="service-card-media">
+              <img src="images/service-5.png" alt="Courier running scheduled business delivery routes" width="400" height="300" loading="lazy" decoding="async">
+              <span class="service-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+                </svg>
+              </span>
+            </div>
+            <div class="service-card-body">
+              <h3 class="service-card-title">Scheduled Routes</h3>
+              <p class="service-card-text">Set it and forget it — recurring daily or weekly delivery routes that run like clockwork, no rebooking required.</p>
+              <a href="services.html#scheduled" class="service-card-btn">
                 View Service
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
@@ -488,6 +514,19 @@
         <!-- /services-grid -->
 
       </div>
+
+      <!-- Divider — flows the dark services section into the light process section -->
+      <div class="section-divider" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+          <g fill="#050505">
+            <path d="M0 1v99c134.3 0 153.7-99 296-99H0Z" opacity=".5"></path>
+            <path d="M1000 4v86C833.3 90 833.3 3.6 666.7 3.6S500 90 333.3 90 166.7 4 0 4h1000Z" opacity=".5"></path>
+            <path d="M617 1v86C372 119 384 1 196 1h421Z" opacity=".5"></path>
+            <path d="M1000 0H0v52C62.5 28 125 4 250 4c250 0 250 96 500 96 125 0 187.5-24 250-48V0Z"></path>
+          </g>
+        </svg>
+      </div>
+
     </section>
     <!-- /SERVICES -->
 
@@ -599,6 +638,95 @@
     </section>
     <!-- /PROCESS -->
 
+
+    <!-- ==================================================================
+       COVERAGE / SERVICE AREAS
+    =================================================================== -->
+    <section id="coverage" class="section-padding">
+      <div class="container coverage-inner">
+
+        <!-- Left: real Atlanta map with neon service-area markers -->
+        <div class="coverage-map-panel reveal fade-right">
+          <div class="coverage-map-bar">
+            <span class="coverage-map-title">Metro Atlanta Courier — Coverage</span>
+            <span class="coverage-map-dots"><i></i><i></i><i class="on"></i></span>
+          </div>
+          <div class="cov-marquee" aria-label="Areas we serve">
+            <div class="cov-marquee-inner">
+              <div class="cov-marquee-group"><span class="cov-marquee-item">Atlanta</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Sandy Springs</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Marietta</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Roswell</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Alpharetta</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Decatur</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Lawrenceville</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Buford</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Duluth</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Jonesboro</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">McDonough</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Stockbridge</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Canton</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Cumming</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Gainesville</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Fayetteville</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Carrollton</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Dallas</span><span class="cov-marquee-sep" aria-hidden="true"></span></div>
+              <div class="cov-marquee-group" aria-hidden="true"><span class="cov-marquee-item">Atlanta</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Sandy Springs</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Marietta</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Roswell</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Alpharetta</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Decatur</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Lawrenceville</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Buford</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Duluth</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Jonesboro</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">McDonough</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Stockbridge</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Canton</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Cumming</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Gainesville</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Fayetteville</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Carrollton</span><span class="cov-marquee-sep" aria-hidden="true"></span><span class="cov-marquee-item">Dallas</span><span class="cov-marquee-sep" aria-hidden="true"></span></div>
+            </div>
+          </div>
+          <div class="coverage-map-stage">
+            <div id="coverageMap" class="coverage-map-leaflet" role="img" aria-label="Map of Metro Atlanta showing the areas Metro Atlanta Courier serves"></div>
+            <span class="coverage-map-legend"><span class="pulse-dot"></span> Live service areas</span>
+          </div>
+        </div>
+
+        <!-- Right: tabbed coverage card -->
+        <div class="coverage-info reveal fade-left">
+          <p class="eyebrow">Service Area &amp; Coverage</p>
+          <h2>We Move All of <span class="accent">Metro Atlanta</span></h2>
+
+          <div class="cov-tabs" role="tablist">
+            <button class="cov-tab active" data-tab="where" role="tab" aria-selected="true">Where We Go <svg class="cov-tab-chev" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+            <button class="cov-tab" data-tab="tracking" role="tab" aria-selected="false">Live Tracking <svg class="cov-tab-chev" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+            <button class="cov-tab" data-tab="beyond" role="tab" aria-selected="false">Beyond the Metro <svg class="cov-tab-chev" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+          </div>
+
+          <div class="cov-card">
+          <div class="cov-panel active" data-panel="where">
+            <p class="cov-panel-lead">From Buckhead to Buford, Marietta to McDonough — if it's in the Atlanta metro, we deliver it, same day.</p>
+            <div class="cov-panel-body">
+              <div class="cov-panel-img">
+                <img src="images/service-3.png" alt="Courier van covering the Atlanta metro" width="280" height="320" loading="lazy" decoding="async">
+              </div>
+              <ul class="cov-checklist">
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>13 metro counties covered</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Same-day, metro-wide service</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>No minimum distance or zone fees</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Residential & commercial stops</li>
+              </ul>
+            </div>
+            <a href="tracking.html" class="btn-primary">Track Your Order <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+          <div class="cov-panel" data-panel="tracking">
+            <p class="cov-panel-lead">Every run is trackable in real time — you and your recipient always know exactly where the package is.</p>
+            <div class="cov-panel-body">
+              <div class="cov-panel-img">
+                <img src="images/service-1.png" alt="Courier checking live delivery tracking" width="280" height="320" loading="lazy" decoding="async">
+              </div>
+              <ul class="cov-checklist">
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Live GPS location updates</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>SMS &amp; email alerts at every step</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Shareable branded tracking link</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Photo + signature proof of delivery</li>
+              </ul>
+            </div>
+            <a href="tracking.html" class="btn-primary">Track Your Order <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+          <div class="cov-panel" data-panel="beyond">
+            <p class="cov-panel-lead">Need something moved outside the metro? Reach out and we'll build a route that works for you.</p>
+            <div class="cov-panel-body">
+              <div class="cov-panel-img">
+                <img src="images/service-5.png" alt="Courier delivering to businesses beyond the metro" width="280" height="320" loading="lazy" decoding="async">
+              </div>
+              <ul class="cov-checklist">
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Out-of-metro runs on request</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Long-distance &amp; statewide trips</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Custom recurring routes</li>
+              <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Dedicated account support</li>
+              </ul>
+            </div>
+            <a href="mailto:assist@metroatlantacourier.com" class="btn-primary">Email Us <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- /COVERAGE -->
+
   </main>
 
 
@@ -610,6 +738,60 @@
   </button>
 
   <script src="js/main.js"></script>
+
+  <!-- Leaflet + coverage map init -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    (function () {
+      var el = document.getElementById('coverageMap');
+      if (!el || typeof L === 'undefined') return;
+
+      var map = L.map(el, {
+        center: [33.86, -84.40],
+        zoom: 9,
+        zoomControl: false,
+        scrollWheelZoom: false,
+        attributionControl: true
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+      }).addTo(map);
+
+      // Served areas — [lat, lng, label, isHub]
+      var areas = [
+        [33.749,  -84.388, 'Atlanta (Fulton)', true],
+        [33.7748, -84.2963, 'Decatur (DeKalb)', false],
+        [33.9526, -84.5499, 'Marietta (Cobb)', false],
+        [33.9562, -83.9880, 'Lawrenceville (Gwinnett)', false],
+        [33.5215, -84.3535, 'Jonesboro (Clayton)', false],
+        [34.2368, -84.4908, 'Canton (Cherokee)', false],
+        [34.2073, -84.1402, 'Cumming (Forsyth)', false],
+        [34.2979, -83.8241, 'Gainesville (Hall)', false],
+        [33.4473, -84.1469, 'McDonough (Henry)', false],
+        [33.4148, -84.4549, 'Fayetteville (Fayette)', false],
+        [33.5801, -85.0766, 'Carrollton (Carroll)', false],
+        [33.9237, -84.8408, 'Dallas (Paulding)', false]
+      ];
+
+      var bounds = [];
+      areas.forEach(function (a) {
+        var icon = L.divIcon({
+          className: '',
+          html: '<span class="map-pin' + (a[3] ? ' hub' : '') + '"></span>',
+          iconSize: [16, 16],
+          iconAnchor: [8, 8]
+        });
+        L.marker([a[0], a[1]], { icon: icon, title: a[2] }).addTo(map).bindTooltip(a[2]);
+        bounds.push([a[0], a[1]]);
+      });
+
+      map.fitBounds(bounds, { padding: [36, 36] });
+      map.setMaxBounds(map.getBounds().pad(0.25));
+    })();
+  </script>
 
 </body>
 

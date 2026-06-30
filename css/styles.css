@@ -416,6 +416,7 @@
 
 #services {
   position: relative;
+  z-index: 2;             /* lift above #process so the bottom divider shows */
   isolation: isolate;
   background-color: #050505;
   /* Neon-green geometric mesh (client-supplied SVG, recolored + faded) */
@@ -434,6 +435,25 @@
   pointer-events: none;
   opacity: 0.10;
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.9'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='200'%20height='200'%20filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Section divider — black waves that flow services down into the process section */
+.section-divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(99%);
+  width: 100%;
+  line-height: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.section-divider svg {
+  display: block;
+  width: 100%;
+  height: clamp(36px, 5vw, 72px);
 }
 
 /* Soft vignette so cards read against the pattern */
@@ -469,11 +489,15 @@
 /* ── Grid ────────────────────────────────────────────────────────────────── */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-lg);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-md);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
+  .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-lg); }
+}
+
+@media (max-width: 880px) {
   .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -649,7 +673,12 @@
    Inset photo banner with 4 white cards floating on top, arrows between steps.
 ============================================================================= */
 
-#process { background-color: var(--bg-100); }
+#process {
+  position: relative;
+  z-index: 1;
+  background-color: var(--bg-100);
+  padding-top: clamp(4.5rem, 9vw, 7rem); /* clear the overhanging divider */
+}
 
 .process-head {
   text-align: center;
@@ -668,15 +697,18 @@
   border-radius: var(--radius-card);
   overflow: hidden;
   background: url("../images/process-bg.png") center / cover no-repeat;
-  padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 3vw, 3rem);
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
+  /* extra white space around the banner within the section */
+  margin-inline: auto;
+  max-width: 1400px;
 }
 
-/* Dark wash so the white cards pop against the photo */
+/* Light wash — keeps the photo visible while letting white cards pop */
 .process-banner::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.58));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.40));
 }
 
 /* ── Card row + arrows ───────────────────────────────────────────────────── */
@@ -694,7 +726,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  background-color: var(--bg-100);
+  background-color: rgb(255, 255, 255);
   border-radius: var(--radius-card);
   padding: var(--space-lg);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.30);
@@ -710,10 +742,10 @@
 /* Big faded step number (watermark) */
 .process-card-num {
   position: absolute;
-  top: -0.75rem;
-  right: 0.25rem;
+  top: 0.65rem;
+  right: 1.3rem;
   font-family: var(--font-heading);
-  font-size: 5.25rem;
+  font-size: 4rem;
   line-height: 1;
   letter-spacing: var(--ls-heading);
   color: var(--green);
@@ -742,7 +774,7 @@
   color: var(--text-700);
   font-size: var(--fs-body-sm);
   line-height: 1.6;
-  margin-bottom: var(--space-lg);
+  padding-bottom: 2rem;
   max-width: none;
 }
 
@@ -798,3 +830,405 @@
     transform: rotate(90deg);
   }
 }
+
+
+/* =============================================================================
+   05 — COVERAGE / SERVICE AREAS
+   Real Atlanta map (Leaflet, left) + tabbed card with checklist & image (right).
+============================================================================= */
+
+#coverage {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--bg-300);
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='800'%20height='800'%20viewBox='0%200%20800%20800'%3E%3Cg%20fill='none'%20stroke='%2304fd04'%20stroke-opacity='0.10'%20stroke-width='2'%3E%3Cpath%20d='M769%20229L1037%20260.9M927%20880L731%20737%20520%20660%20309%20538%2040%20599%20295%20764%20126.5%20879.5%2040%20599-197%20493%20102%20382-31%20229%20126.5%2079.5-69-63'/%3E%3Cpath%20d='M-31%20229L237%20261%20390%20382%20603%20493%20308.5%20537.5%20101.5%20381.5M370%20905L295%20764'/%3E%3Cpath%20d='M520%20660L578%20842%20731%20737%20840%20599%20603%20493%20520%20660%20295%20764%20309%20538%20390%20382%20539%20269%20769%20229%20577.5%2041.5%20370%20105%20295%20-36%20126.5%2079.5%20237%20261%20102%20382%2040%20599%20-69%20737%20127%20880'/%3E%3Cpath%20d='M520-140L578.5%2042.5%20731-63M603%20493L539%20269%20237%20261%20370%20105M902%20382L539%20269M390%20382L102%20382'/%3E%3Cpath%20d='M-222%2042L126.5%2079.5%20370%20105%20539%20269%20577.5%2041.5%20927%2080%20769%20229%20902%20382%20603%20493%20731%20737M295-36L577.5%2041.5M578%20842L295%20764M40-201L127%2080M102%20382L-261%20269'/%3E%3C/g%3E%3Cg%20fill='%2304fd04'%20fill-opacity='.12'%3E%3Ccircle%20cx='769'%20cy='229'%20r='5'/%3E%3Ccircle%20cx='539'%20cy='269'%20r='5'/%3E%3Ccircle%20cx='603'%20cy='493'%20r='5'/%3E%3Ccircle%20cx='731'%20cy='737'%20r='5'/%3E%3Ccircle%20cx='520'%20cy='660'%20r='5'/%3E%3Ccircle%20cx='309'%20cy='538'%20r='5'/%3E%3Ccircle%20cx='295'%20cy='764'%20r='5'/%3E%3Ccircle%20cx='40'%20cy='599'%20r='5'/%3E%3Ccircle%20cx='102'%20cy='382'%20r='5'/%3E%3Ccircle%20cx='127'%20cy='80'%20r='5'/%3E%3Ccircle%20cx='370'%20cy='105'%20r='5'/%3E%3Ccircle%20cx='578'%20cy='42'%20r='5'/%3E%3Ccircle%20cx='237'%20cy='261'%20r='5'/%3E%3Ccircle%20cx='390'%20cy='382'%20r='5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 720px 720px;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.coverage-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .coverage-inner { grid-template-columns: 1fr 1fr; gap: var(--space-3xl); }
+}
+
+/* ── Map panel ───────────────────────────────────────────────────────────── */
+.coverage-map-panel {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background-color: #0a0a0a;
+  box-shadow: var(--shadow-card);
+}
+
+.coverage-map-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background-color: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.coverage-map-title {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-500);
+}
+
+.coverage-map-dots { display: flex; gap: 6px; }
+.coverage-map-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, 0.18); }
+.coverage-map-dots i.on { background: var(--green); }
+
+.coverage-map-stage { position: relative; }
+
+.coverage-map-leaflet {
+  width: 100%;
+  height: clamp(380px, 46vw, 560px);
+  background-color: #e8e8e8;
+}
+
+/* Locations marquee — neon-green band scrolling the service cities */
+.cov-marquee {
+  background-color: var(--green);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cov-marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: cov-marquee-scroll 32s linear infinite;
+}
+
+.cov-marquee:hover .cov-marquee-inner { animation-play-state: paused; }
+
+.cov-marquee-group { display: flex; align-items: center; flex-shrink: 0; }
+
+.cov-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.55rem;
+  padding-inline: var(--space-md);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+
+.cov-marquee-sep {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.55);
+  flex-shrink: 0;
+}
+
+/* left → right travel */
+@keyframes cov-marquee-scroll {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cov-marquee-inner { animation: none; }
+}
+
+.coverage-map-legend {
+  position: absolute;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-caption);
+  color: var(--white);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-tag);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Neon markers */
+.map-pin {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 2px solid #0a0a0a;
+  box-shadow: 0 0 8px 2px rgba(4, 253, 4, 0.7);
+}
+
+.map-pin.hub {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  box-shadow: 0 0 12px 4px rgba(4, 253, 4, 0.9);
+}
+
+.map-pin.hub::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  animation: ping 1.8s ease-out infinite;
+}
+
+/* Leaflet UI to match the dark theme */
+.coverage-map-leaflet .leaflet-tooltip {
+  background: #0a0a0a;
+  color: #fff;
+  border: 1px solid var(--green);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  box-shadow: none;
+}
+.coverage-map-leaflet .leaflet-tooltip::before { display: none; }
+.coverage-map-leaflet .leaflet-control-attribution {
+  background: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}
+.coverage-map-leaflet .leaflet-control-attribution a { color: rgba(255, 255, 255, 0.75); }
+
+/* ── Right column ────────────────────────────────────────────────────────── */
+.coverage-info .eyebrow { margin-bottom: var(--space-sm); color: var(--green-ink); }
+.coverage-info h2 { margin-bottom: var(--space-lg); }
+
+/* Tabs */
+.cov-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.cov-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.7rem 1.1rem;
+  background: var(--bg-100);
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  color: var(--text-600);
+  cursor: pointer;
+  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+}
+
+.cov-tab:hover { border-color: var(--green); color: var(--text-100); }
+.cov-tab .cov-tab-chev { width: 1rem; height: 1rem; transition: transform var(--transition-base); }
+.cov-tab.active { background: var(--green-tint); border-color: var(--green); color: var(--green-ink); }
+.cov-tab.active .cov-tab-chev { transform: rotate(180deg); }
+
+/* Card */
+.cov-card {
+  position: relative;
+  background: var(--bg-100);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-card);
+}
+
+/* Green accent block offset behind the card */
+.cov-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translate(16px, 16px);
+  background: var(--green);
+  border-radius: var(--radius-card);
+}
+
+.cov-panel { display: none; }
+.cov-panel.active { display: block; animation: fadeIn 0.4s ease; }
+
+.cov-panel-lead { color: var(--text-700); margin-bottom: var(--space-lg); max-width: none; }
+
+.cov-panel-body {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--space-lg);
+  align-items: stretch;
+  margin-bottom: var(--space-lg);
+}
+
+.cov-panel-img {
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 100%;
+}
+
+.cov-panel-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.cov-checklist { display: flex; flex-direction: column; gap: var(--space-sm); }
+.cov-checklist li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--text-600);
+}
+.cov-check { width: 1.3rem; height: 1.3rem; color: var(--green-ink); flex-shrink: 0; }
+
+@media (max-width: 520px) {
+  .cov-panel-body { grid-template-columns: 1fr; }
+  .cov-panel-img { aspect-ratio: 16 / 10; min-height: 0; max-height: 220px; }
+}
+
+
+/* =============================================================================
+   06 — WHY CHOOSE US
+   Dark section: image + intro (top), white card carousel with nav (bottom).
+============================================================================= */
+
+#why {
+  position: relative;
+  overflow: hidden;
+  background-color: #0a0a0a;
+  color: var(--text-400);
+}
+
+#why .eyebrow { color: var(--green); margin-bottom: var(--space-sm); }
+
+/* ── Top: image + intro ──────────────────────────────────────────────────── */
+.why-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+  margin-bottom: var(--space-3xl);
+}
+
+@media (min-width: 900px) {
+  .why-head { grid-template-columns: 0.85fr 1fr; gap: var(--space-3xl); }
+}
+
+.why-img {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+}
+
+.why-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.why-intro h2 { color: var(--white); margin-bottom: var(--space-md); max-width: 16ch; }
+.why-intro p { color: var(--text-500); max-width: 56ch; }
+
+/* ── Carousel ────────────────────────────────────────────────────────────── */
+.why-track {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: var(--space-xs);
+}
+.why-track::-webkit-scrollbar { display: none; }
+
+.why-card {
+  position: relative;
+  flex: 0 0 330px;
+  scroll-snap-align: start;
+  background: var(--bg-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  color: var(--text-600);
+}
+
+@media (max-width: 600px) { .why-card { flex-basis: 82%; } }
+
+.why-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  color: var(--green-ink);
+  margin-bottom: var(--space-lg);
+}
+.why-card-icon svg { width: 1.6rem; height: 1.6rem; }
+
+.why-card-num {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-xl);
+  font-family: var(--font-heading);
+  font-size: 3.25rem;
+  line-height: 1;
+  letter-spacing: var(--ls-heading);
+  color: rgba(0, 0, 0, 0.07);
+  pointer-events: none;
+}
+
+.why-card-divider { width: 46px; height: 3px; border-radius: 2px; background: var(--green); margin-bottom: var(--space-md); }
+
+.why-card h3 { font-size: var(--fs-h4); color: var(--text-100); margin-bottom: var(--space-sm); }
+.why-card p { font-size: var(--fs-body-sm); color: var(--text-700); line-height: 1.6; margin-bottom: var(--space-lg); max-width: none; }
+
+.why-readmore {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  color: var(--text-100);
+}
+.why-readmore .rm-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--black);
+  transition: transform var(--transition-base);
+}
+.why-readmore .rm-circle svg { width: 1.1rem; height: 1.1rem; }
+.why-readmore:hover .rm-circle { transform: translateX(4px); }
+
+/* Nav arrows */
+.why-nav { display: flex; gap: var(--space-sm); margin-top: var(--space-xl); }
+.why-nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+}
+.why-nav button:hover { background: var(--green); border-color: var(--green); color: var(--black); }
+.why-nav button svg { width: 1.25rem; height: 1.25rem; }
