@@ -1,0 +1,975 @@
+/* =============================================================================
+   METRO ATLANTA COURIER — global.css
+   MigsFlow Web Design
+
+   Standardized, site-wide styles shared across every page.
+
+   TABLE OF CONTENTS
+   01. Font Declarations
+   02. Design Tokens (CSS Variables)
+   03. Base Reset
+   04. Typography Scale
+   05. Layout Utilities
+   06. Spacing Utilities
+   07. Buttons
+   08. Topbar
+   09. Navigation
+   10. Animations (keyframes + reveal utilities)
+   11. Accessibility
+   ============================================================================= */
+
+
+/* =============================================================================
+   01 — FONT DECLARATIONS
+   Locally hosted for max page speed (no Google Fonts CDN render blocking).
+   Source files live in /fonts/
+============================================================================= */
+
+/* inter-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
+/* inter-italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400;
+  src: url('../fonts/inter-v20-latin-italic.woff2') format('woff2');
+}
+
+/* inter-500 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/inter-v20-latin-500.woff2') format('woff2');
+}
+
+/* inter-600 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/inter-v20-latin-600.woff2') format('woff2');
+}
+
+/* inter-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/inter-v20-latin-700.woff2') format('woff2');
+}
+
+/* bebas-neue-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/bebas-neue-v16-latin-regular.woff2') format('woff2');
+}
+
+
+/* =============================================================================
+   02 — DESIGN TOKENS
+   Single source of truth for all colors, fonts, spacing, and radii.
+   Brand palette: BLACK · WHITE · GREEN (#04FD04)
+============================================================================= */
+
+:root {
+
+  /* ── Text Colors ─────────────────────────────────────────────────────────── */
+  --text-100: #0A0A0A;   /* near-black — primary heading color                  */
+  --text-200: #000000;   /* black — strong body text                           */
+  --text-300: #07A107;   /* readable green — links / accents on light bg       */
+  --text-400: #FFFFFF;   /* white — text on dark backgrounds                   */
+  --text-500: rgba(255, 255, 255, 0.72); /* white ghost — muted text on dark  */
+  --text-600: #2C2C2C;   /* charcoal — standard body copy                      */
+  --text-700: #565656;   /* grey — secondary / supporting body copy            */
+
+  /* ── Background Colors ───────────────────────────────────────────────────── */
+  --bg-100: #FFFFFF;                     /* white — default page background     */
+  --bg-200: #141414;                     /* charcoal-black — dark section bg    */
+  --bg-300: #F5F6F5;                     /* off-white tint — subtle section     */
+  --bg-400: #0A0A0A;                     /* near-black — deepest dark bg/footer */
+  --bg-500: rgba(4, 253, 4, 0.10);       /* green tint — card / tag bg          */
+  --bg-600: #000000;                     /* pure black band                     */
+  --bg-700: rgba(4, 253, 4, 0.16);       /* stronger green tint                 */
+
+  /* ── Brand / Action Colors ───────────────────────────────────────────────── */
+  --green:        #04FD04;   /* primary brand green                             */
+  --green-hover:  #04D404;   /* green darkened ~10% for hover                   */
+  --green-ink:    #07A107;   /* readable green for text on white                */
+  --green-tint:   rgba(4, 253, 4, 0.12); /* ghost-light button fill            */
+  --black:        #0A0A0A;
+  --white:        #FFFFFF;
+
+  /* ── Font Families ───────────────────────────────────────────────────────── */
+  --font-heading: 'Bebas Neue', Arial, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  /* ── Heading Scale (clamp: mobile min → fluid → desktop max) ─────────────── */
+  --fs-h1: clamp(2.75rem, 6.5vw, 5.5rem);  /* 44px → 88px  */
+  --fs-h2: clamp(2.25rem, 4.5vw, 3.5rem);  /* 36px → 56px  */
+  --fs-h3: clamp(1.75rem, 3vw, 2.5rem);    /* 28px → 40px  */
+  --fs-h4: clamp(1.375rem, 2vw, 1.875rem); /* 22px → 30px  */
+  --fs-h5: clamp(1.125rem, 1.5vw, 1.5rem); /* 18px → 24px  */
+  --fs-h6: clamp(1rem, 1.25vw, 1.25rem);   /* 16px → 20px  */
+
+  /* ── Body / UI Font Sizes ────────────────────────────────────────────────── */
+  --fs-body-lg:  1.0625rem; /* 17px — lead paragraphs, hero subtext            */
+  --fs-body:     1rem;      /* 16px — standard body copy                       */
+  --fs-body-sm:  0.9375rem; /* 15px — supporting copy, card text               */
+  --fs-caption:  0.875rem;  /* 14px — captions, fine print                     */
+  --fs-eyebrow:  0.8125rem; /* 13px — eyebrow / section label tags             */
+  --fs-btn:      1rem;      /* 16px — button label text                        */
+
+  /* ── Line Heights ────────────────────────────────────────────────────────── */
+  --lh-heading: 1.05;  /* tight — suits Bebas Neue display headings            */
+  --lh-body:    1.65;  /* comfortable reading line height for Inter            */
+  --lh-ui:      1.2;   /* buttons, labels, nav items                           */
+
+  /* ── Letter Spacing ──────────────────────────────────────────────────────── */
+  --ls-heading: 0.01em;
+  --ls-eyebrow: 0.14em;
+  --ls-body:    0em;
+
+  /* ── Spacing Scale ───────────────────────────────────────────────────────── */
+  --space-2xs: 0.25rem;   /*  4px */
+  --space-xs:  0.5rem;    /*  8px */
+  --space-sm:  0.75rem;   /* 12px */
+  --space-md:  1rem;      /* 16px */
+  --space-lg:  1.5rem;    /* 24px */
+  --space-xl:  2rem;      /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+  --space-4xl: 6rem;      /* 96px */
+  --space-5xl: 8rem;      /* 128px */
+
+  /* ── Section Padding ─────────────────────────────────────────────────────── */
+  --section-padding: clamp(3rem, 8vw, 5.5rem);
+
+  /* ── Border Radius ───────────────────────────────────────────────────────── */
+  --radius-card:  16px;
+  --radius-btn:   6px;
+  --radius-tag:   100px;  /* pill tags */
+  --radius-input: 8px;
+
+  /* ── Shadows ─────────────────────────────────────────────────────────────── */
+  --shadow-card:       0 6px 28px rgba(0, 0, 0, 0.10);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.16);
+  --shadow-btn:        0 6px 20px rgba(4, 253, 4, 0.30);
+
+  /* ── Transitions ─────────────────────────────────────────────────────────── */
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.4s ease;
+
+  /* ── Layout ──────────────────────────────────────────────────────────────── */
+  --container-max: 1600px;
+  --container-padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+
+/* =============================================================================
+   03 — BASE RESET
+============================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  color: var(--text-600);
+  background-color: var(--bg-100);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+
+/* =============================================================================
+   04 — TYPOGRAPHY SCALE
+============================================================================= */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  color: var(--text-100);
+  text-transform: uppercase;
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+h5 { font-size: var(--fs-h5); }
+h6 { font-size: var(--fs-h6); }
+
+/* Headings on dark backgrounds */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: var(--text-400);
+}
+
+/* Green accent inside a heading — e.g. <span class="accent"> */
+.accent { color: var(--green); }
+
+p {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-600);
+  max-width: 65ch;
+}
+
+p.lead {
+  font-size: var(--fs-body-lg);
+  color: var(--text-700);
+}
+
+/* Eyebrow label — small tag above section headings */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--green-ink);
+}
+
+.dark .eyebrow { color: var(--green); }
+
+
+/* =============================================================================
+   05 — LAYOUT UTILITIES
+============================================================================= */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.section-padding {
+  padding-block: var(--section-padding);
+}
+
+.dark      { background-color: var(--bg-400); color: var(--text-400); }
+.dark-mid  { background-color: var(--bg-200); color: var(--text-400); }
+.light-tint{ background-color: var(--bg-300); }
+
+.flex        { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between{ display: flex; align-items: center; justify-content: space-between; }
+.flex-col    { display: flex; flex-direction: column; }
+.grid        { display: grid; }
+
+
+/* =============================================================================
+   06 — SPACING UTILITIES
+============================================================================= */
+
+.mt-sm  { margin-top: var(--space-sm); }
+.mt-md  { margin-top: var(--space-md); }
+.mt-lg  { margin-top: var(--space-lg); }
+.mt-xl  { margin-top: var(--space-xl); }
+.mt-2xl { margin-top: var(--space-2xl); }
+
+.mb-sm  { margin-bottom: var(--space-sm); }
+.mb-md  { margin-bottom: var(--space-md); }
+.mb-lg  { margin-bottom: var(--space-lg); }
+.mb-xl  { margin-bottom: var(--space-xl); }
+.mb-2xl { margin-bottom: var(--space-2xl); }
+
+.gap-sm  { gap: var(--space-sm); }
+.gap-md  { gap: var(--space-md); }
+.gap-lg  { gap: var(--space-lg); }
+.gap-xl  { gap: var(--space-xl); }
+
+
+/* =============================================================================
+   07 — BUTTONS
+   .btn-primary    → solid green fill, black text (signature CTA)
+   .btn-ghost-dark → transparent, white border + text (dark / image backgrounds)
+   .btn-ghost-light→ green tint fill, green border + text (light backgrounds)
+============================================================================= */
+
+.btn-primary,
+.btn-ghost-dark,
+.btn-ghost-light {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.9375rem 1.875rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-btn);
+  font-weight: 700;
+  line-height: var(--lh-ui);
+  letter-spacing: 0.01em;
+  border-radius: var(--radius-btn);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.btn-primary:hover,
+.btn-ghost-dark:hover,
+.btn-ghost-light:hover { transform: translateY(-2px); }
+
+.btn-primary:active,
+.btn-ghost-dark:active,
+.btn-ghost-light:active { transform: translateY(0); }
+
+/* ── .btn-primary ────────────────────────────────────────────────────────── */
+.btn-primary {
+  background-color: var(--green);
+  border-color: var(--green);
+  color: var(--black);
+}
+
+.btn-primary:hover {
+  background-color: var(--green-hover);
+  border-color: var(--green-hover);
+  box-shadow: var(--shadow-btn);
+}
+
+/* ── .btn-ghost-dark ─────────────────────────────────────────────────────── */
+.btn-ghost-dark {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: var(--white);
+}
+
+.btn-ghost-dark:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background-color: rgba(4, 253, 4, 0.08);
+}
+
+/* ── .btn-ghost-light ────────────────────────────────────────────────────── */
+.btn-ghost-light {
+  background-color: var(--green-tint);
+  border-color: var(--green);
+  color: var(--green-ink);
+}
+
+.btn-ghost-light:hover {
+  background-color: var(--green-tint);
+  border-color: var(--green-hover);
+  color: var(--black);
+}
+
+/* ── Button icon ─────────────────────────────────────────────────────────── */
+.btn-primary .btn-icon,
+.btn-ghost-dark .btn-icon,
+.btn-ghost-light .btn-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+.btn-primary:hover .btn-icon,
+.btn-ghost-dark:hover .btn-icon,
+.btn-ghost-light:hover .btn-icon {
+  transform: translate(2px, -2px);
+}
+
+
+/* =============================================================================
+   08 — TOPBAR
+   Black band above the navigation. Hidden on mobile to preserve space.
+============================================================================= */
+
+#topbar {
+  background-color: var(--bg-600);
+  padding-block: 0.625rem;
+}
+
+#topbar .topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.topbar-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+}
+
+.topbar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+  color: var(--text-500);
+  white-space: nowrap;
+}
+
+.topbar-item svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.topbar-item a { color: var(--text-500); transition: color var(--transition-base); }
+.topbar-item a:hover { color: var(--green); }
+
+.topbar-social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.topbar-social a {
+  color: var(--text-500);
+  transition: color var(--transition-base), transform var(--transition-base);
+}
+
+.topbar-social a:hover { color: var(--green); transform: translateY(-1px); }
+
+.topbar-social svg { width: 1.05rem; height: 1.05rem; }
+
+@media (max-width: 900px) {
+  #topbar { display: none; }
+}
+
+
+/* =============================================================================
+   09 — NAVIGATION
+============================================================================= */
+
+#navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--bg-100);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  transition: box-shadow var(--transition-base);
+}
+
+#navbar.scrolled { box-shadow: 0 2px 16px rgba(0, 0, 0, 0.10); }
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+  gap: var(--space-lg);
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────────── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.nav-logo img {
+  height: 2.75rem;
+  width: auto;
+}
+
+/* Text fallback / wordmark beside logo */
+.nav-logo .nav-logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: var(--ls-heading);
+  color: var(--text-100);
+  white-space: nowrap;
+}
+
+/* ── Nav links list ──────────────────────────────────────────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+}
+
+.nav-links > li { position: relative; }
+
+.nav-links a,
+.nav-drop-toggle {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--text-600);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color var(--transition-base);
+  white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-drop-toggle:hover,
+.nav-links a.active { color: var(--green-ink); }
+
+/* ── Dropdown chevron icon ───────────────────────────────────────────────── */
+.nav-chevron {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.nav-links li.open .nav-chevron { transform: rotate(180deg); }
+
+/* ── Dropdown menu ───────────────────────────────────────────────────────── */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 50%;
+  min-width: 14rem;
+  background-color: var(--bg-100);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-card);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.14);
+  padding: var(--space-sm) 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-6px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.nav-links li.open .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Invisible bridge over the gap so moving cursor to the menu won't close it */
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  right: 0;
+  height: 1rem;
+}
+
+/* Open on hover / keyboard focus (desktop only) */
+@media (min-width: 1025px) {
+  .nav-links li:hover .nav-dropdown,
+  .nav-links li:focus-within .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-links li:hover .nav-chevron,
+  .nav-links li:focus-within .nav-chevron { transform: rotate(180deg); }
+}
+
+.nav-dropdown li a {
+  display: block;
+  padding: 0.625rem 1.25rem;
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--text-600);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.nav-dropdown li a:hover { background-color: var(--bg-300); color: var(--green-ink); }
+
+/* ── Nav actions (login link + CTA) ──────────────────────────────────────── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-shrink: 0;
+}
+
+.nav-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--text-600);
+  white-space: nowrap;
+  transition: color var(--transition-base);
+}
+
+.nav-login svg { width: 1.1rem; height: 1.1rem; }
+.nav-login:hover { color: var(--green-ink); }
+
+.nav-actions .btn-primary {
+  padding: 0.6875rem 1.375rem;
+  font-size: var(--fs-body-sm);
+}
+
+/* ── Hamburger button (mobile only) ──────────────────────────────────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  flex-shrink: 0;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 1.5rem;
+  height: 2px;
+  background-color: var(--text-100);
+  border-radius: 2px;
+  margin-block: 3px;
+  transition:
+    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity   0.25s ease,
+    width     0.25s ease;
+  transform-origin: center;
+}
+
+#navbar.menu-open .nav-hamburger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+#navbar.menu-open .nav-hamburger span:nth-child(2) { opacity: 0; width: 0; }
+#navbar.menu-open .nav-hamburger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ── Mobile drawer ───────────────────────────────────────────────────────── */
+.nav-drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: var(--bg-100);
+  padding: 5.5rem var(--container-padding) var(--space-2xl);
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+}
+
+#navbar.menu-open .nav-drawer { transform: translateX(0); }
+
+.nav-drawer-close {
+  position: absolute;
+  top: 1.5rem;
+  right: var(--container-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-600);
+  border-radius: 50%;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.nav-drawer-close:hover { background-color: rgba(0, 0, 0, 0.06); color: var(--text-100); }
+.nav-drawer-close svg { width: 1.5rem; height: 1.5rem; }
+
+.nav-drawer ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-drawer ul li { border-bottom: 1px solid rgba(0, 0, 0, 0.06); }
+
+.nav-drawer ul li a,
+.nav-drawer .nav-drop-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-600);
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.nav-drawer ul li a:hover,
+.nav-drawer .nav-drop-toggle:hover { color: var(--green-ink); }
+
+.nav-drawer .nav-sub {
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--space-md);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-bottom: 0;
+  transition:
+    max-height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity    0.3s ease,
+    padding-bottom 0.3s ease;
+}
+
+.nav-drawer .nav-sub.open {
+  max-height: 240px;
+  opacity: 1;
+  padding-bottom: var(--space-sm);
+}
+
+.nav-drawer .nav-sub li { border-bottom: none; }
+
+.nav-drawer .nav-sub li a {
+  font-size: var(--fs-body-sm);
+  color: var(--text-700);
+  padding: var(--space-sm) 0;
+}
+
+.nav-drawer-cta {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.nav-drawer-cta .btn-primary,
+.nav-drawer-cta .btn-ghost-light {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── Responsive breakpoints ──────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nav-links,
+  .nav-actions { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-drawer { display: block; }
+}
+
+@media (max-width: 767px) {
+  .nav-inner { height: 4.25rem; }
+  .nav-logo img { height: 2.25rem; }
+  .nav-logo .nav-logo-text { font-size: 1.25rem; }
+}
+
+
+/* =============================================================================
+   10 — ANIMATIONS
+   @keyframes + reveal utilities. JS (main.js) adds .is-visible on scroll.
+============================================================================= */
+
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp   { from { opacity: 0; transform: translateY(24px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeLeft { from { opacity: 0; transform: translateX(32px); }  to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeRight{ from { opacity: 0; transform: translateX(-32px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes spin     { to { transform: rotate(360deg); } }
+@keyframes ping     { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+
+/* ── Reveal base ─────────────────────────────────────────────────────────── */
+.reveal { opacity: 0; }
+.reveal.is-visible { opacity: 1; }
+
+/* Load-on-page-ready variants (no .reveal) */
+.fade-in   { animation: fadeIn 0.6s ease forwards; }
+.fade-up   { animation: fadeUp 0.65s ease forwards; }
+.fade-down { animation: fadeDown 0.65s ease forwards; }
+.fade-left { animation: fadeLeft 0.65s ease forwards; }
+.fade-right{ animation: fadeRight 0.65s ease forwards; }
+
+/* Scroll-triggered variants (.reveal + direction) */
+.reveal.fade-in   { transition: opacity 0.6s ease; }
+.reveal.fade-up   { transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.fade-down { transform: translateY(-24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.fade-left { transform: translateX(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.fade-right{ transform: translateX(-32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+
+.reveal.fade-up.is-visible,
+.reveal.fade-down.is-visible { opacity: 1; transform: translateY(0); }
+.reveal.fade-left.is-visible,
+.reveal.fade-right.is-visible { opacity: 1; transform: translateX(0); }
+
+/* ── Stagger delays ──────────────────────────────────────────────────────── */
+.delay-1 { transition-delay: 0.1s !important; animation-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s !important; animation-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s !important; animation-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s !important; animation-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s !important; animation-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s !important; animation-delay: 0.6s; }
+
+/* ── Live pulse dot (GPS / active indicator) ─────────────────────────────── */
+.pulse-dot {
+  position: relative;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--green);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--green);
+  animation: ping 1.6s ease-out infinite;
+}
+
+/* ── Hover lift ──────────────────────────────────────────────────────────── */
+.hover-lift { transition: transform var(--transition-base), box-shadow var(--transition-base); }
+.hover-lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); }
+
+
+/* =============================================================================
+   11 — ACCESSIBILITY
+============================================================================= */
+
+:focus-visible {
+  outline: 2px solid var(--green-ink);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* =============================================================================
+   SCROLL TO TOP BUTTON
+============================================================================= */
+.scroll-top-btn {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  z-index: 999;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--green);
+  border: none;
+  color: var(--black);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-btn);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity var(--transition-base),
+    visibility var(--transition-base),
+    transform var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.scroll-top-btn:hover { background-color: var(--green-hover); transform: translateY(-2px); }
+.scroll-top-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.scroll-top-btn svg { width: 1.25rem; height: 1.25rem; }

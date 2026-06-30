@@ -1,0 +1,800 @@
+/* =============================================================================
+   METRO ATLANTA COURIER — styles.css
+   MigsFlow Web Design
+
+   Homepage (index.html) specific styles only.
+   Shared/standardized styles live in global.css.
+
+   TABLE OF CONTENTS
+   01. Marquee Strip (scrolling services band)
+   02. Hero Section
+   ============================================================================= */
+
+
+/* =============================================================================
+   01 — MARQUEE STRIP
+   Infinite left-scrolling green band of services / trust points.
+   Pure CSS — two identical groups translate -50% for a seamless loop.
+============================================================================= */
+
+.marquee {
+  background-color: var(--green);
+  overflow: hidden;
+  white-space: nowrap;
+  /* Soft fade at both edges */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+}
+
+.marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+}
+
+/* Pause on hover for readability */
+.marquee:hover .marquee-inner { animation-play-state: paused; }
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.85rem;
+  padding-inline: var(--space-lg);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+
+/* Package-box separator between items (icon drawn via CSS mask) */
+.marquee-sep {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background-color: var(--black);
+  opacity: 0.9;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23000'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%208%2012%203%203%208l9%205%209-5Z'/%3E%3Cpath%20d='M3%208v8l9%205%209-5V8'/%3E%3Cpath%20d='M12%2013v8'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23000'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%208%2012%203%203%208l9%205%209-5Z'/%3E%3Cpath%20d='M3%208v8l9%205%209-5V8'/%3E%3Cpath%20d='M12%2013v8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-inner { animation: none; }
+}
+
+
+/* =============================================================================
+   02 — HERO SECTION
+============================================================================= */
+
+#hero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: clamp(560px, 86vh, 880px);
+}
+
+/* Background image */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+/* Mobile portrait crop — keep the couriers centered in frame */
+@media (max-width: 600px) {
+  .hero-bg img { object-position: center center; }
+}
+
+/* Dark gradient overlay — darker on the left for text legibility */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.60) 42%,
+      rgba(0, 0, 0, 0.32) 100%),
+    linear-gradient(0deg,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.00) 40%);
+}
+
+/* Thin green accent line along the very bottom of the hero */
+#hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  z-index: 3;
+  background-color: var(--green);
+}
+
+/* ── Hero inner — mobile: single column ──────────────────────────────────── */
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2xl);
+  padding: 2rem;
+  width: 100%;
+  min-width: 0;     /* allow this flex item of #hero to shrink */
+  max-width: 100%;
+}
+
+@media (min-width: 1100px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr) 420px;
+    align-items: center;
+    gap: var(--space-4xl);
+    max-width: 1320px;     /* keep the block centered, not full-bleed */
+    margin-inline: auto;
+  }
+}
+
+/* ── Left column ─────────────────────────────────────────────────────────── */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  max-width: 100%;
+  min-width: 0; /* allow grid column to shrink so headings wrap, not overflow */
+}
+
+@media (min-width: 1025px) {
+  .hero-content { max-width: 720px; }
+}
+
+/* Eyebrow */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-400);
+  padding: 0.5rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-tag);
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* H1 */
+.hero-heading {
+  color: var(--text-400);
+  font-size: var(--fs-h1);
+  line-height: 0.96;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* Smallest phones — keep the headline from clipping at the edge */
+@media (max-width: 430px) {
+  .hero-heading { font-size: clamp(2.25rem, 10.5vw, 2.6rem); }
+}
+
+/* Body */
+.hero-body {
+  font-size: var(--fs-body);
+  color: var(--text-500);
+  line-height: var(--lh-body);
+  max-width: 56ch;
+}
+
+@media (min-width: 768px) {
+  .hero-body { font-size: var(--fs-body-lg); }
+}
+
+/* Buttons — stacked on mobile, row on larger screens */
+.hero-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.hero-btns .btn-primary,
+.hero-btns .btn-ghost-dark {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 560px) {
+  .hero-btns {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .hero-btns .btn-primary,
+  .hero-btns .btn-ghost-dark {
+    width: auto;
+    justify-content: flex-start;
+  }
+}
+
+/* ── Hero stats row ──────────────────────────────────────────────────────── */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md) var(--space-xl);
+  width: 100%;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+@media (min-width: 560px) {
+  .hero-stats { grid-template-columns: repeat(4, auto); justify-content: start; gap: var(--space-3xl); }
+}
+
+.hero-stat-num {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1;
+  color: var(--green);
+  letter-spacing: var(--ls-heading);
+}
+
+.hero-stat-label {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--text-500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Right column — trust / snapshot card ────────────────────────────────── */
+.hero-card-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+@media (min-width: 1100px) {
+  .hero-card-wrap { margin-inline: 0; max-width: 100%; }
+}
+
+/* Ghost block behind the card */
+.hero-card-ghost {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(4, 253, 4, 0.16);
+  border: 1px solid rgba(4, 253, 4, 0.30);
+  border-radius: var(--radius-card);
+  z-index: 0;
+}
+
+/* Card */
+.hero-card {
+  position: relative;
+  z-index: 1;
+  background-color: var(--bg-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Card image with live badge */
+.hero-card-media {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.hero-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-card-badge {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-tag);
+  background-color: rgba(0, 0, 0, 0.78);
+  color: var(--white);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Card body */
+.hero-card-body {
+  padding: var(--space-md) var(--space-xs) var(--space-2xs);
+}
+
+.hero-card-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: var(--space-sm);
+}
+
+.hero-card-stars svg { width: 1.15rem; height: 1.15rem; color: #F5A623; }
+
+.hero-card-quote {
+  font-size: var(--fs-body-sm);
+  color: var(--text-600);
+  line-height: 1.5;
+  max-width: none;
+}
+
+.hero-card-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hero-card-foot-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+  background-color: var(--bg-500);
+  flex-shrink: 0;
+}
+
+.hero-card-foot-icon svg { width: 1.4rem; height: 1.4rem; color: var(--green-ink); }
+
+.hero-card-stat {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--text-700);
+  line-height: 1.3;
+  max-width: none;
+}
+
+.hero-card-stat strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: var(--ls-heading);
+  color: var(--text-100);
+}
+
+
+/* =============================================================================
+   03 — SERVICES SECTION
+   Four cards: inset image (icon badge top-left) + title + text + bottom button.
+============================================================================= */
+
+#services {
+  position: relative;
+  isolation: isolate;
+  background-color: #050505;
+  /* Neon-green geometric mesh (client-supplied SVG, recolored + faded) */
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='800'%20height='800'%20viewBox='0%200%20800%20800'%3E%3Cg%20fill='none'%20stroke='%2304fd04'%20stroke-opacity='0.16'%20stroke-width='2'%3E%3Cpath%20d='M769%20229L1037%20260.9M927%20880L731%20737%20520%20660%20309%20538%2040%20599%20295%20764%20126.5%20879.5%2040%20599-197%20493%20102%20382-31%20229%20126.5%2079.5-69-63'/%3E%3Cpath%20d='M-31%20229L237%20261%20390%20382%20603%20493%20308.5%20537.5%20101.5%20381.5M370%20905L295%20764'/%3E%3Cpath%20d='M520%20660L578%20842%20731%20737%20840%20599%20603%20493%20520%20660%20295%20764%20309%20538%20390%20382%20539%20269%20769%20229%20577.5%2041.5%20370%20105%20295%20-36%20126.5%2079.5%20237%20261%20102%20382%2040%20599%20-69%20737%20127%20880'/%3E%3Cpath%20d='M520-140L578.5%2042.5%20731-63M603%20493L539%20269%20237%20261%20370%20105M902%20382L539%20269M390%20382L102%20382'/%3E%3Cpath%20d='M-222%2042L126.5%2079.5%20370%20105%20539%20269%20577.5%2041.5%20927%2080%20769%20229%20902%20382%20603%20493%20731%20737M295-36L577.5%2041.5M578%20842L295%20764M40-201L127%2080M102%20382L-261%20269'/%3E%3C/g%3E%3Cg%20fill='%2304fd04'%20fill-opacity='0.28'%3E%3Ccircle%20cx='769'%20cy='229'%20r='5'/%3E%3Ccircle%20cx='539'%20cy='269'%20r='5'/%3E%3Ccircle%20cx='603'%20cy='493'%20r='5'/%3E%3Ccircle%20cx='731'%20cy='737'%20r='5'/%3E%3Ccircle%20cx='520'%20cy='660'%20r='5'/%3E%3Ccircle%20cx='309'%20cy='538'%20r='5'/%3E%3Ccircle%20cx='295'%20cy='764'%20r='5'/%3E%3Ccircle%20cx='40'%20cy='599'%20r='5'/%3E%3Ccircle%20cx='102'%20cy='382'%20r='5'/%3E%3Ccircle%20cx='127'%20cy='80'%20r='5'/%3E%3Ccircle%20cx='370'%20cy='105'%20r='5'/%3E%3Ccircle%20cx='578'%20cy='42'%20r='5'/%3E%3Ccircle%20cx='237'%20cy='261'%20r='5'/%3E%3Ccircle%20cx='390'%20cy='382'%20r='5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 760px 760px;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+/* Film grain overlay */
+#services::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.10;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.9'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='200'%20height='200'%20filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Soft vignette so cards read against the pattern */
+#services::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+#services .container { position: relative; z-index: 1; }
+
+/* ── Section heading ─────────────────────────────────────────────────────── */
+.services-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+.services-head-copy { max-width: 640px; }
+
+.services-head .eyebrow { margin-bottom: var(--space-sm); color: var(--green); }
+
+.services-head h2 { margin-bottom: var(--space-md); color: var(--white); }
+
+.services-head p { color: var(--text-500); max-width: 60ch; }
+
+/* ── Grid ────────────────────────────────────────────────────────────────── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+@media (max-width: 1100px) {
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Mobile: swipeable, snap-scrolling carousel instead of a vertical stack */
+@media (max-width: 600px) {
+  .services-grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: var(--space-md);
+    /* Bleed to the section edges so cards can scroll fully + next card peeks */
+    margin-inline: calc(-1 * var(--container-padding));
+    padding-inline: var(--container-padding);
+    padding-bottom: var(--space-xs);
+    scrollbar-width: none;          /* Firefox */
+    margin-left: .4rem;
+  }
+
+  .services-grid::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+  .service-card {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+}
+
+/* ── Swipe hint (mobile only) ────────────────────────────────────────────── */
+.services-swipe-hint { display: none; }
+
+@media (max-width: 600px) {
+  .services-swipe-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: var(--space-md);
+    color: var(--green);
+    font-size: var(--fs-caption);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .services-swipe-hint svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    animation: swipe-nudge 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes swipe-nudge {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(6px); }
+}
+
+/* ── Card ────────────────────────────────────────────────────────────────── */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-100);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: var(--radius-card);
+  padding: var(--space-md);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: transparent;
+}
+
+/* Image (inset — card padding leaves space around it) */
+.service-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: var(--space-md);
+}
+
+.service-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.service-card:hover .service-card-media img { transform: scale(1.05); }
+
+/* Icon badge — top-left of the image */
+.service-card-icon {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+  background-color: var(--black);
+  color: var(--green);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.service-card-icon svg { width: 1.4rem; height: 1.4rem; }
+
+/* Card body */
+.service-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-inline: var(--space-2xs);
+}
+
+.service-card-title {
+  font-size: var(--fs-h4);
+  margin-bottom: var(--space-xs);
+}
+
+.service-card-text {
+  font-size: var(--fs-body-sm);
+  color: var(--text-700);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+  max-width: none;
+}
+
+/* Bottom button — pinned to card bottom so all cards align */
+.service-card-btn {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: 0.8125rem 1rem;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  color: var(--text-100);
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.service-card-btn:hover {
+  background-color: var(--green);
+  border-color: var(--green);
+  color: var(--black);
+}
+
+.service-card-btn svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+.service-card-btn:hover svg { transform: translate(2px, -2px); }
+
+
+/* =============================================================================
+   04 — PROCESS / HOW IT WORKS (photo banner + floating cards)
+   Inset photo banner with 4 white cards floating on top, arrows between steps.
+============================================================================= */
+
+#process { background-color: var(--bg-100); }
+
+.process-head {
+  text-align: center;
+  max-width: 680px;
+  margin-inline: auto;
+  margin-bottom: var(--space-2xl);
+}
+
+.process-head .eyebrow { margin-bottom: var(--space-sm); justify-content: center; }
+.process-head h2 { margin-bottom: var(--space-md); }
+.process-head p { color: var(--text-700); margin-inline: auto; }
+
+/* ── Banner — photo background, inset so white shows around it ────────────── */
+.process-banner {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: url("../images/process-bg.png") center / cover no-repeat;
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 3vw, 3rem);
+}
+
+/* Dark wash so the white cards pop against the photo */
+.process-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.58));
+}
+
+/* ── Card row + arrows ───────────────────────────────────────────────────── */
+.process-cards {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-sm);
+}
+
+.process-card {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-lg);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.30);
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.process-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.38);
+}
+
+/* Big faded step number (watermark) */
+.process-card-num {
+  position: absolute;
+  top: -0.75rem;
+  right: 0.25rem;
+  font-family: var(--font-heading);
+  font-size: 5.25rem;
+  line-height: 1;
+  letter-spacing: var(--ls-heading);
+  color: var(--green);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+/* Icon — top-left */
+.process-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 12px;
+  background-color: var(--black);
+  color: var(--green);
+  margin-bottom: var(--space-md);
+}
+
+.process-card-icon svg { width: 1.5rem; height: 1.5rem; }
+
+.process-card h3 { font-size: var(--fs-h4); margin-bottom: var(--space-xs); }
+
+.process-card p {
+  color: var(--text-700);
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+  max-width: none;
+}
+
+/* Learn more — pinned to card bottom */
+.process-card-btn {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  color: var(--green-ink);
+  transition: color var(--transition-base);
+}
+
+.process-card-btn svg { width: 1rem; height: 1rem; transition: transform var(--transition-base); }
+.process-card-btn:hover { color: var(--black); }
+.process-card-btn:hover svg { transform: translateX(4px); }
+
+/* Arrow between cards */
+.process-arrow {
+  flex: 0 0 auto;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+}
+
+.process-arrow svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+}
+
+/* ── Tablet: 2 x 2, hide inline arrows ───────────────────────────────────── */
+@media (min-width: 601px) and (max-width: 1100px) {
+  .process-cards { flex-wrap: wrap; }
+  .process-card { flex: 1 1 calc(50% - var(--space-md)); }
+  .process-arrow { display: none; }
+}
+
+/* ── Mobile: stacked, arrows point down ──────────────────────────────────── */
+@media (max-width: 600px) {
+  .process-banner { padding: var(--space-lg) var(--space-md); }
+  .process-cards { flex-direction: column; }
+  .process-card { width: 100%; flex: 1 1 auto; }
+  .process-arrow {
+    width: 100%;
+    padding-block: var(--space-2xs);
+    transform: rotate(90deg);
+  }
+}

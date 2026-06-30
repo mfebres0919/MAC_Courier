@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Metro Atlanta Courier — same-day courier and delivery service for medical, legal, corporate, and rush deliveries across Metro Atlanta. Real-time GPS tracking, 6 AM–11 PM, 7 days a week.">
+
+  <title>Metro Atlanta Courier | Same-Day Courier & Delivery in Atlanta</title>
+
+  <!-- =====================================================================
+     PRELOAD — critical above-the-fold assets for best LCP/FCP
+  ====================================================================== -->
+  <link rel="preload" as="image" href="images/hero-1-mobile.png" media="(max-width: 600px)">
+  <link rel="preload" as="image" href="images/hero-1.png" media="(min-width: 601px)">
+  <link rel="preload" href="fonts/bebas-neue-v16-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-v20-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- =====================================================================
+     CSS — load order:
+     1. global.css — tokens, reset, typography, layout, buttons, nav, animations
+     2. styles.css — homepage-specific styles
+  ====================================================================== -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- =====================================================================
+     TOPBAR — hidden on mobile via global.css
+  ====================================================================== -->
+  <div id="topbar">
+    <div class="container topbar-inner">
+
+      <div class="topbar-info">
+        <!-- Hours -->
+        <span class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6l4 2"/>
+          </svg>
+          Open Daily · 6:00 AM – 11:00 PM
+        </span>
+
+        <!-- Phone -->
+        <span class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M2.25 6.338c0-.414.336-.75.75-.75h2.25a.75.75 0 0 1 .743.647l.63 4.2a.75.75 0 0 1-.44.813l-1.27.508a11.25 11.25 0 0 0 5.38 5.38l.508-1.27a.75.75 0 0 1 .814-.44l4.2.63a.75.75 0 0 1 .647.743V18a.75.75 0 0 1-.75.75C9.716 18.75 2.25 11.284 2.25 6.338Z"/>
+          </svg>
+          <a href="tel:+14709992922">(470) 999-2922</a>
+        </span>
+
+        <!-- Address -->
+        <span class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
+          </svg>
+          P.O. Box 671054, Marietta, GA 30006
+        </span>
+      </div>
+
+      <!-- Social icons -->
+      <div class="topbar-social">
+        <a href="#" aria-label="X / Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+  <!-- /TOPBAR -->
+
+
+  <!-- =====================================================================
+     NAVIGATION
+  ====================================================================== -->
+  <header id="navbar">
+    <div class="container nav-inner">
+
+      <!-- Logo — save the uploaded MAC logo as images/logo.png.
+           Until then, a styled wordmark shows automatically as a fallback. -->
+      <a href="index.html" class="nav-logo" aria-label="Metro Atlanta Courier — Home">
+        <img src="images/logo.jpg" alt="Metro Atlanta Courier" width="180" height="44"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+        <span class="nav-logo-text" style="display:none;">
+          MAC<span class="accent" style="color:var(--green-ink);">.</span>
+        </span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <nav aria-label="Main navigation">
+        <ul class="nav-links">
+
+          <!-- Services dropdown -->
+          <li>
+            <button class="nav-drop-toggle" aria-expanded="false" aria-haspopup="true">
+              Services
+              <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <ul class="nav-dropdown" role="menu">
+              <li role="none"><a href="services.html#medical" role="menuitem">Medical Courier</a></li>
+              <li role="none"><a href="services.html#legal" role="menuitem">Legal Documents</a></li>
+              <li role="none"><a href="services.html#corporate" role="menuitem">Corporate Logistics</a></li>
+              <li role="none"><a href="services.html#rush" role="menuitem">Rush &amp; On-Demand</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#coverage">Coverage</a></li>
+          <li><a href="tracking.html">Track Order</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Desktop actions: login + CTA -->
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+          </svg>
+          Client Login
+        </a>
+        <a href="order.html" class="btn-primary">
+          Schedule a Delivery
+          <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Hamburger (mobile only) -->
+      <button class="nav-hamburger" aria-expanded="false" aria-label="Open menu" aria-controls="mobile-drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Mobile drawer -->
+      <nav class="nav-drawer" id="mobile-drawer" aria-label="Mobile navigation">
+        <button class="nav-drawer-close" aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+
+        <ul>
+          <!-- Services accordion -->
+          <li>
+            <button class="nav-drop-toggle" aria-expanded="false">
+              Services
+              <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <ul class="nav-sub">
+              <li><a href="services.html#medical">Medical Courier</a></li>
+              <li><a href="services.html#legal">Legal Documents</a></li>
+              <li><a href="services.html#corporate">Corporate Logistics</a></li>
+              <li><a href="services.html#rush">Rush &amp; On-Demand</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#coverage">Coverage</a></li>
+          <li><a href="tracking.html">Track Order</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-drawer-cta">
+          <a href="order.html" class="btn-primary">
+            Schedule a Delivery
+            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+          </a>
+          <a href="login.html" class="btn-ghost-light">Client Login</a>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+  <!-- /NAVIGATION -->
+
+
+  <!-- =====================================================================
+     MARQUEE — scrolling services / trust band
+     Two identical groups translate -50% for a seamless infinite loop.
+  ====================================================================== -->
+  <div class="marquee" aria-label="Our services">
+    <div class="marquee-inner">
+
+      <!-- Group 1 -->
+      <div class="marquee-group">
+        <span class="marquee-item">Medical Courier</span>      <span class="marquee-sep" aria-hidden="true"></span>
+        <span class="marquee-item">Legal Documents</span>      <span class="marquee-sep" aria-hidden="true"></span>
+        <span class="marquee-item">Live GPS Tracking</span>    <span class="marquee-sep" aria-hidden="true"></span>
+        <span class="marquee-item">Corporate Logistics</span>  <span class="marquee-sep" aria-hidden="true"></span>
+        <span class="marquee-item">Proof of Delivery</span>    <span class="marquee-sep" aria-hidden="true"></span>
+        <span class="marquee-item">Net 30 Accounts</span>      <span class="marquee-sep" aria-hidden="true"></span>
+        <span class="marquee-item">Same-Day Delivery</span>    <span class="marquee-sep" aria-hidden="true"></span>
+        <span class="marquee-item">Rush &amp; On-Demand</span> <span class="marquee-sep" aria-hidden="true"></span>
+      </div>
+
+      <!-- Group 2 — duplicate for seamless loop -->
+      <div class="marquee-group" aria-hidden="true">
+        <span class="marquee-item">Medical Courier</span>      <span class="marquee-sep"></span>
+        <span class="marquee-item">Legal Documents</span>      <span class="marquee-sep"></span>
+        <span class="marquee-item">Live GPS Tracking</span>    <span class="marquee-sep"></span>
+        <span class="marquee-item">Corporate Logistics</span>  <span class="marquee-sep"></span>
+        <span class="marquee-item">Proof of Delivery</span>    <span class="marquee-sep"></span>
+        <span class="marquee-item">Net 30 Accounts</span>      <span class="marquee-sep"></span>
+        <span class="marquee-item">Same-Day Delivery</span>    <span class="marquee-sep"></span>
+        <span class="marquee-item">Rush &amp; On-Demand</span> <span class="marquee-sep"></span>
+      </div>
+
+    </div>
+  </div>
+  <!-- /MARQUEE -->
+
+
+  <main>
+
+    <!-- ==================================================================
+       HERO
+    =================================================================== -->
+    <section id="hero">
+
+      <div class="container hero-inner">
+
+        <!-- Left: text + buttons + stats -->
+        <div class="hero-content fade-right">
+
+          <p class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            Atlanta's Same-Day Courier Service
+          </p>
+
+          <h1 class="hero-heading">
+            We Move <span class="accent">Atlanta Business.</span>
+          </h1>
+
+          <p class="hero-body">
+            Same-day courier delivery for medical, legal, corporate &amp; rush needs —
+            with real-time GPS tracking and a team that treats your deadline like its own.
+            Available 6&nbsp;AM&nbsp;–&nbsp;11&nbsp;PM, seven days a week.
+          </p>
+
+          <div class="hero-btns">
+            <a href="order.html" class="btn-primary">
+              Schedule a Delivery
+              <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </a>
+            <a href="login.html" class="btn-ghost-dark">
+              Existing B2B Client
+              <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Stat row -->
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-num">6AM&ndash;11PM</span>
+              <span class="hero-stat-label">Hours of Operation</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-num">60 Min</span>
+              <span class="hero-stat-label">Avg. Response</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-num">50+</span>
+              <span class="hero-stat-label">Daily Deliveries</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-num">100%</span>
+              <span class="hero-stat-label">On-Time Rate</span>
+            </div>
+          </div>
+
+        </div>
+        <!-- /hero-content -->
+
+        <!-- Right: trust / snapshot card -->
+        <div class="hero-card-wrap fade-left delay-2">
+
+          <div class="hero-card-ghost" aria-hidden="true"></div>
+
+          <div class="hero-card">
+
+            <!-- Image with live badge -->
+            <div class="hero-card-media">
+              <img src="images/hero-3.png" alt="Metro Atlanta Courier driver with packages" width="380" height="240" loading="eager" decoding="async">
+              <span class="hero-card-badge">
+                <span class="pulse-dot"></span>
+                Live GPS Tracking
+              </span>
+            </div>
+
+            <!-- Body -->
+            <div class="hero-card-body">
+              <div class="hero-card-stars" aria-label="5 out of 5 stars">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+
+              <p class="hero-card-quote">
+                Trusted by Atlanta's medical, legal &amp; corporate teams to move what matters — on time, every time.
+              </p>
+
+              <div class="hero-card-foot">
+                <span class="hero-card-foot-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                </span>
+                <p class="hero-card-stat">
+                  <strong>10+ Years</strong>
+                  Moving Metro Atlanta
+                </p>
+              </div>
+            </div>
+
+          </div>
+          <!-- /hero-card -->
+
+        </div>
+        <!-- /hero-card-wrap -->
+
+      </div>
+      <!-- /hero-inner -->
+
+      <!-- Hero background image (above the fold — not lazy loaded) -->
+      <picture class="hero-bg">
+        <!-- Mobile: portrait crop -->
+        <source media="(max-width: 600px)" srcset="images/hero-1-mobile.png">
+        <!-- Desktop: wide crop -->
+        <source media="(min-width: 601px)" srcset="images/hero-1.png">
+        <img src="images/hero-1.png" alt="" aria-hidden="true" width="1920" height="1080" decoding="async">
+      </picture>
+
+    </section>
+    <!-- /HERO -->
+
+
+    <!-- ==================================================================
+       SERVICES
+    =================================================================== -->
+    <section id="services" class="section-padding">
+      <div class="container">
+
+        <!-- Heading -->
+        <div class="services-head">
+          <div class="services-head-copy reveal fade-up">
+            <p class="eyebrow">What We Move</p>
+            <h2>Delivery Services <span class="accent">Built for Speed</span></h2>
+            <p>From hospitals to law firms to warehouses — we move what Metro Atlanta
+               businesses can't afford to be late on, with the right care for every load.</p>
+          </div>
+          <a href="services.html" class="btn-primary reveal fade-up delay-1">
+            View All Services
+            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Swipe hint (mobile only) -->
+        <p class="services-swipe-hint">
+          Swipe to explore
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+          </svg>
+        </p>
+
+        <!-- Cards -->
+        <div class="services-grid">
+
+          <!-- Medical Courier -->
+          <article class="service-card reveal fade-up">
+            <div class="service-card-media">
+              <img src="images/hero-2.png" alt="Medical courier with secured packages" width="400" height="300" loading="lazy" decoding="async">
+              <span class="service-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
+                </svg>
+              </span>
+            </div>
+            <div class="service-card-body">
+              <h3 class="service-card-title">Medical Courier</h3>
+              <p class="service-card-text">STAT specimen, lab, and pharmaceutical runs handled with chain-of-custody care and HIPAA-aware drivers.</p>
+              <a href="services.html#medical" class="service-card-btn">
+                View Service
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Legal Documents -->
+          <article class="service-card reveal fade-up delay-1">
+            <div class="service-card-media">
+              <img src="images/hero-3.png" alt="Legal documents prepared for delivery" width="400" height="300" loading="lazy" decoding="async">
+              <span class="service-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.4 48.4 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.99 5.99 0 0 1-2.031.352 5.99 5.99 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.99 5.99 0 0 1-2.031.352 5.99 5.99 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z"/>
+                </svg>
+              </span>
+            </div>
+            <div class="service-card-body">
+              <h3 class="service-card-title">Legal Documents</h3>
+              <p class="service-card-text">Time-sensitive filings, contracts, and court documents delivered with signature proof of delivery.</p>
+              <a href="services.html#legal" class="service-card-btn">
+                View Service
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Rush & On-Demand -->
+          <article class="service-card reveal fade-up delay-2">
+            <div class="service-card-media">
+              <img src="images/hero-1.png" alt="Rush delivery van loading on demand" width="400" height="300" loading="lazy" decoding="async">
+              <span class="service-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/>
+                </svg>
+              </span>
+            </div>
+            <div class="service-card-body">
+              <h3 class="service-card-title">Rush &amp; On-Demand</h3>
+              <p class="service-card-text">Need it there now? On-demand pickup with the fastest available driver and a live ETA, door to door.</p>
+              <a href="services.html#rush" class="service-card-btn">
+                View Service
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Corporate Logistics -->
+          <article class="service-card reveal fade-up delay-3">
+            <div class="service-card-media">
+              <img src="images/hero-3.png" alt="Corporate logistics team coordinating deliveries" width="400" height="300" loading="lazy" decoding="async">
+              <span class="service-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>
+                </svg>
+              </span>
+            </div>
+            <div class="service-card-body">
+              <h3 class="service-card-title">Corporate Logistics</h3>
+              <p class="service-card-text">Scheduled routes, inter-office transfers, and recurring B2B deliveries that keep your operation moving.</p>
+              <a href="services.html#corporate" class="service-card-btn">
+                View Service
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+        </div>
+        <!-- /services-grid -->
+
+      </div>
+    </section>
+    <!-- /SERVICES -->
+
+
+    <!-- ==================================================================
+       PROCESS / HOW IT WORKS — scroll-fill timeline
+    =================================================================== -->
+    <section id="process" class="section-padding">
+      <div class="container">
+
+        <div class="process-head reveal fade-up">
+          <p class="eyebrow">How It Works</p>
+          <h2>From Request to <span class="accent">Doorstep</span></h2>
+          <p>Four simple steps from booking to proof of delivery — with live tracking the whole way through.</p>
+        </div>
+
+        <div class="process-banner reveal fade-up">
+          <div class="process-cards">
+
+            <!-- Step 01 -->
+            <article class="process-card">
+              <span class="process-card-num" aria-hidden="true">01</span>
+              <span class="process-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
+                </svg>
+              </span>
+              <h3>Schedule Your Delivery</h3>
+              <p>Book online or call it in. Tell us the pickup, drop-off, and how fast you need it — and get an instant price.</p>
+              <a href="order.html" class="process-card-btn">
+                Learn More
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </article>
+
+            <span class="process-arrow" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </span>
+
+            <!-- Step 02 -->
+            <article class="process-card">
+              <span class="process-card-num" aria-hidden="true">02</span>
+              <span class="process-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-6m0-13.5h3.375c.621 0 1.125.504 1.125 1.125v11.25m-12-3v3.75m0-3.75H2.25m0 0a1.5 1.5 0 0 1 0-3h8.625c.621 0 1.125.504 1.125 1.125V6.375c0-.621-.504-1.125-1.125-1.125H3.375C2.754 5.25 2.25 5.754 2.25 6.375v8.25"/>
+                </svg>
+              </span>
+              <h3>Instant Dispatch</h3>
+              <p>We match your job to the nearest available driver and they’re on the move within minutes — no waiting.</p>
+              <a href="services.html" class="process-card-btn">
+                Learn More
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </article>
+
+            <span class="process-arrow" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </span>
+
+            <!-- Step 03 -->
+            <article class="process-card">
+              <span class="process-card-num" aria-hidden="true">03</span>
+              <span class="process-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
+                </svg>
+              </span>
+              <h3>Live GPS Tracking</h3>
+              <p>Follow your delivery in real time with live GPS and ETA updates — from pickup all the way to the door.</p>
+              <a href="tracking.html" class="process-card-btn">
+                Learn More
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </article>
+
+            <span class="process-arrow" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </span>
+
+            <!-- Step 04 -->
+            <article class="process-card">
+              <span class="process-card-num" aria-hidden="true">04</span>
+              <span class="process-card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+              </span>
+              <h3>Delivered &amp; Confirmed</h3>
+              <p>Your package arrives on time with photo and signature proof of delivery sent straight to you.</p>
+              <a href="tracking.html" class="process-card-btn">
+                Learn More
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </article>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- /PROCESS -->
+
+  </main>
+
+
+  <!-- Scroll to top -->
+  <button class="scroll-top-btn" id="scrollTop" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>
