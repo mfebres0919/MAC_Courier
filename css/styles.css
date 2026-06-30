@@ -1110,33 +1110,65 @@
   overflow: hidden;
   background-color: #0a0a0a;
   color: var(--text-400);
+  padding-top: clamp(2.5rem, 8vw, 3.5rem);
 }
 
 #why .eyebrow { color: var(--green); margin-bottom: var(--space-sm); }
 
-/* ── Top: image + intro ──────────────────────────────────────────────────── */
-.why-head {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-2xl);
-  align-items: center;
-  margin-bottom: var(--space-3xl);
+.why-inner { position: relative; z-index: 2; }
+
+.why-intro { margin-bottom: var(--space-2xl); }
+.why-intro h2 { color: var(--white); margin-bottom: var(--space-md); }
+.why-intro p { color: var(--text-500); max-width: 52ch; }
+
+/* ── Phone: hide big image, small image bleeds into the top-right ────────── */
+.why-img-main { display: none; }
+
+.why-img-corner {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  max-width: 320px;
+  height: 180px;
+  object-fit: cover;
+  z-index: 0;
 }
 
-@media (min-width: 900px) {
-  .why-head { grid-template-columns: 0.85fr 1fr; gap: var(--space-3xl); }
+.why-intro h2 { max-width: 48%; }  /* keep the heading left of the corner image */
+
+/* ── Tablet & up: overlap layout (big top-left, small top-right) ─────────── */
+@media (min-width: 768px) {
+  #why { padding-top: clamp(3rem, 6vw, 5rem); }
+
+  .why-img-main {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 42%;
+    height: 620px;
+    z-index: 0;
+  }
+
+  .why-img-corner {
+    width: 290px;
+    height: 195px;
+    max-width: none;
+  }
+
+  .why-intro {
+    margin-left: 47%;
+    max-width: 520px;
+    padding-top: var(--space-md);
+    margin-bottom: var(--space-2xl);
+  }
+  .why-intro h2 { max-width: 16ch; }
+
+  /* Cards overlap the lower portion of the big image */
+  .why-carousel { position: relative; z-index: 2; }
 }
-
-.why-img {
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  aspect-ratio: 5 / 4;
-}
-
-.why-img img { width: 100%; height: 100%; object-fit: cover; }
-
-.why-intro h2 { color: var(--white); margin-bottom: var(--space-md); max-width: 16ch; }
-.why-intro p { color: var(--text-500); max-width: 56ch; }
 
 /* ── Carousel ────────────────────────────────────────────────────────────── */
 .why-track {

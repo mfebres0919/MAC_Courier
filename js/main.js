@@ -240,3 +240,67 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 })();
+
+
+/* ===========================================================================
+   WHY CHOOSE US — carousel: auto-advance left every 3s,
+   pause on hover, stop for good on click / drag.
+=========================================================================== */
+(function () {
+  var track = document.getElementById('whyTrack');
+  if (!track) return;
+  var carousel = track.closest('.why-carousel') || track;
+  var prev = document.querySelector('.why-prev');
+  var next = document.querySelector('.why-next');
+
+  var timer = null;
+  var stopped = false; // set once the user takes control (click / drag)
+
+  function step() {
+    var card = track.querySelector('.why-card');
+    if (!card) return 340;
+    var gap = parseInt(getComputedStyle(track).gap) || 24;
+    return card.offsetWidth + gap;
+  }
+
+  function atEnd() {
+    return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+  }
+
+  function advance() {
+    if (atEnd()) {
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    }
+  }
+
+  function start() {
+    if (stopped || timer) return;
+    timer = setInterval(advance, 3000);
+  }
+
+  function pause() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  function stopForGood() {
+    stopped = true;
+    pause();
+  }
+
+  // Auto-play
+  start();
+
+  // Pause while hovering, resume on leave (unless the user has taken control)
+  carousel.addEventListener('mouseenter', pause);
+  carousel.addEventListener('mouseleave', start);
+
+  // Clicking anywhere in the carousel (incl. nav) stops auto-play for good
+  carousel.addEventListener('click', stopForGood);
+  track.addEventListener('pointerdown', stopForGood);
+
+  // Manual nav
+  if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+  if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+})();
