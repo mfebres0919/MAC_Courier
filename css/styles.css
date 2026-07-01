@@ -1371,7 +1371,19 @@
   container-type: inline-size;
   aspect-ratio: 1108 / 1376;
 }
+/* Green accent frame offset behind the image — bottom-right this time */
+.about-figure::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: translate(14px, 14px);
+  border: 2px solid var(--green);
+  border-radius: var(--radius-card);
+}
 .about-figure-img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1412,3 +1424,321 @@
 @media (max-width: 991px) {
   .about-photo::before { transform: translate(-10px, -10px); }
 }
+
+
+/* =============================================================================
+   08 — INDUSTRIES TRUST BAR
+   Black band, neon-green top/bottom border, white bold text scrolling
+   right→left, with green package-box separators.
+============================================================================= */
+
+.trust-marquee {
+  background-color: #0a0a0a;
+  border-block: 2px solid var(--green);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.trust-marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: trust-scroll 34s linear infinite;
+}
+
+.trust-marquee:hover .trust-marquee-inner { animation-play-state: paused; }
+
+.trust-marquee-group { display: flex; align-items: center; flex-shrink: 0; }
+
+.trust-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 1rem;
+  padding-inline: var(--space-lg);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+/* Green package-box separator (same icon as the top marquee) */
+.trust-marquee-sep {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-color: var(--green);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23000'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%208%2012%203%203%208l9%205%209-5Z'/%3E%3Cpath%20d='M3%208v8l9%205%209-5V8'/%3E%3Cpath%20d='M12%2013v8'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23000'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%208%2012%203%203%208l9%205%209-5Z'/%3E%3Cpath%20d='M3%208v8l9%205%209-5V8'/%3E%3Cpath%20d='M12%2013v8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* right → left travel */
+@keyframes trust-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-marquee-inner { animation: none; }
+}
+
+
+/* =============================================================================
+   09 — JOIN OUR TEAM (careers / driver application)
+============================================================================= */
+
+#careers {
+  position: relative;
+  isolation: isolate;
+  color: var(--text-400);
+  background-color: #0a0a0a;
+  background-image: url("../images/hero-1.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Dark overlay so the copy + form card stay readable over the photo */
+#careers::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.80) 55%, rgba(0,0,0,0.72) 100%);
+}
+
+.careers-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .careers-inner { grid-template-columns: 1fr 1.05fr; gap: var(--space-3xl); }
+}
+
+#careers .eyebrow { color: var(--green); margin-bottom: var(--space-sm); }
+.careers-intro h2 { color: var(--white); margin-bottom: var(--space-md); max-width: 14ch; }
+.careers-intro > p { color: var(--text-500); margin-bottom: var(--space-xl); max-width: 52ch; }
+
+.careers-benefits { display: flex; flex-direction: column; gap: var(--space-lg); }
+.careers-benefit { display: flex; gap: var(--space-md); align-items: flex-start; }
+.careers-benefit-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 12px;
+  background-color: var(--green);
+  color: var(--black);
+}
+.careers-benefit-icon svg { width: 1.5rem; height: 1.5rem; }
+.careers-benefit h4 { color: var(--white); font-size: var(--fs-h5); margin-bottom: 0.25rem; }
+.careers-benefit p { color: var(--text-500); font-size: var(--fs-body-sm); max-width: 42ch; }
+
+/* ── Form card ───────────────────────────────────────────────────────────── */
+.careers-form-card {
+  background-color: var(--bg-100);
+  border-radius: var(--radius-card);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: var(--shadow-card);
+}
+.careers-form-card h3 { margin-bottom: var(--space-2xs); }
+.careers-form-card .careers-form-lead { color: var(--text-700); font-size: var(--fs-body-sm); margin-bottom: var(--space-lg); }
+
+.form-row { display: grid; grid-template-columns: 1fr; gap: var(--space-md); margin-bottom: var(--space-md); }
+@media (min-width: 560px) { .form-row.two { grid-template-columns: 1fr 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+.field label { font-size: var(--fs-caption); font-weight: 600; color: var(--text-600); }
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid rgba(0, 0, 0, 0.14);
+  border-radius: var(--radius-input);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--text-100);
+  background-color: var(--bg-100);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(4, 253, 4, 0.15);
+}
+.field textarea { resize: vertical; min-height: 110px; }
+.field input.error,
+.field select.error,
+.field textarea.error { border-color: #e5484d; }
+
+.careers-submit { width: 100%; justify-content: center; margin-top: var(--space-xs); }
+
+/* Success state */
+.careers-success { display: none; text-align: center; padding: var(--space-2xl) var(--space-md); }
+.careers-success.show { display: block; animation: fadeIn 0.4s ease; }
+.careers-success svg { width: 3.25rem; height: 3.25rem; color: var(--green-ink); margin: 0 auto var(--space-md); }
+.careers-success h3 { margin-bottom: var(--space-xs); }
+.careers-success p { color: var(--text-700); max-width: 40ch; margin-inline: auto; }
+
+
+/* =============================================================================
+   10 — SCHEDULE NOW (final CTA — multi-step order wizard)
+============================================================================= */
+
+#schedule {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #050505;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='800'%20height='800'%20viewBox='0%200%20800%20800'%3E%3Cg%20fill='none'%20stroke='%2304fd04'%20stroke-opacity='0.16'%20stroke-width='2'%3E%3Cpath%20d='M769%20229L1037%20260.9M927%20880L731%20737%20520%20660%20309%20538%2040%20599%20295%20764%20126.5%20879.5%2040%20599-197%20493%20102%20382-31%20229%20126.5%2079.5-69-63'/%3E%3Cpath%20d='M-31%20229L237%20261%20390%20382%20603%20493%20308.5%20537.5%20101.5%20381.5M370%20905L295%20764'/%3E%3Cpath%20d='M520%20660L578%20842%20731%20737%20840%20599%20603%20493%20520%20660%20295%20764%20309%20538%20390%20382%20539%20269%20769%20229%20577.5%2041.5%20370%20105%20295%20-36%20126.5%2079.5%20237%20261%20102%20382%2040%20599%20-69%20737%20127%20880'/%3E%3Cpath%20d='M520-140L578.5%2042.5%20731-63M603%20493L539%20269%20237%20261%20370%20105M902%20382L539%20269M390%20382L102%20382'/%3E%3Cpath%20d='M-222%2042L126.5%2079.5%20370%20105%20539%20269%20577.5%2041.5%20927%2080%20769%20229%20902%20382%20603%20493%20731%20737M295-36L577.5%2041.5M578%20842L295%20764M40-201L127%2080M102%20382L-261%20269'/%3E%3C/g%3E%3Cg%20fill='%2304fd04'%20fill-opacity='0.28'%3E%3Ccircle%20cx='769'%20cy='229'%20r='5'/%3E%3Ccircle%20cx='539'%20cy='269'%20r='5'/%3E%3Ccircle%20cx='603'%20cy='493'%20r='5'/%3E%3Ccircle%20cx='731'%20cy='737'%20r='5'/%3E%3Ccircle%20cx='520'%20cy='660'%20r='5'/%3E%3Ccircle%20cx='309'%20cy='538'%20r='5'/%3E%3Ccircle%20cx='295'%20cy='764'%20r='5'/%3E%3Ccircle%20cx='40'%20cy='599'%20r='5'/%3E%3Ccircle%20cx='102'%20cy='382'%20r='5'/%3E%3Ccircle%20cx='127'%20cy='80'%20r='5'/%3E%3Ccircle%20cx='370'%20cy='105'%20r='5'/%3E%3Ccircle%20cx='578'%20cy='42'%20r='5'/%3E%3Ccircle%20cx='237'%20cy='261'%20r='5'/%3E%3Ccircle%20cx='390'%20cy='382'%20r='5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 760px 760px;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.schedule-glow {
+  position: absolute;
+  bottom: -200px;
+  right: -120px;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(4, 253, 4, 0.18) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.schedule-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: stretch;
+}
+@media (min-width: 940px) { .schedule-inner { grid-template-columns: 0.85fr 1.15fr; gap: var(--space-3xl); } }
+
+/* ── Left media panel ────────────────────────────────────────────────────── */
+.schedule-media {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  min-height: 340px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-card);
+}
+.schedule-media-img { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; }
+.schedule-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.85) 100%);
+}
+.schedule-media-cap { position: relative; z-index: 2; padding: var(--space-xl); }
+.schedule-media-eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: var(--space-sm);
+}
+.schedule-media-title { color: var(--white); margin-bottom: var(--space-sm); }
+.schedule-media-cap p { color: rgba(255, 255, 255, 0.82); font-size: var(--fs-body-sm); max-width: 40ch; }
+
+/* ── Right form card ─────────────────────────────────────────────────────── */
+.schedule-card {
+  background: var(--bg-100);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.qf-progress { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl); }
+.qf-progress-bar { flex: 1; height: 6px; background: rgba(0, 0, 0, 0.1); border-radius: 99px; overflow: hidden; }
+.qf-progress-bar span { display: block; height: 100%; width: 25%; background: var(--green); border-radius: 99px; transition: width var(--transition-slow); }
+.qf-progress-text {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-700);
+  white-space: nowrap;
+}
+
+.qf-step { display: none; animation: qf-fade 0.35s ease; }
+.qf-step.is-active { display: block; }
+@keyframes qf-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.qf-step-title { font-size: var(--fs-h4); margin-bottom: var(--space-2xs); }
+.qf-step-sub { color: var(--text-700); margin-bottom: var(--space-lg); font-size: var(--fs-body-sm); }
+
+.qf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+.qf-input { display: flex; flex-direction: column; gap: 0.35rem; }
+.qf-input.qf-span2 { grid-column: 1 / -1; }
+.qf-input > span { font-size: var(--fs-caption); font-weight: 600; color: var(--text-600); }
+.qf-input input,
+.qf-input select,
+.qf-input textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  color: var(--text-100);
+  background: var(--bg-100);
+  border: 1.5px solid rgba(0, 0, 0, 0.14);
+  border-radius: var(--radius-input);
+  padding: 0.7rem 0.85rem;
+  outline: none;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.qf-input textarea { resize: vertical; min-height: 110px; }
+.qf-input input:focus,
+.qf-input select:focus,
+.qf-input textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(4, 253, 4, 0.15); }
+.qf-invalid { border-color: #e5484d !important; }
+@media (max-width: 520px) { .qf-grid { grid-template-columns: 1fr; } }
+
+.qf-success { text-align: center; padding: var(--space-lg) 0; }
+.qf-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--green-tint);
+  color: var(--green-ink);
+  margin-bottom: var(--space-md);
+}
+.qf-success-icon svg { width: 32px; height: 32px; }
+
+.qf-nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); margin-top: var(--space-xl); }
+.qf-nav .qf-next, .qf-nav .qf-submit { margin-left: auto; }
+
+
+/* ── Careers form: legend + radio group (work authorization) ─────────────── */
+.field-legend { font-size: var(--fs-caption); font-weight: 600; color: var(--text-600); line-height: 1.4; }
+.radio-row { display: flex; gap: var(--space-xl); margin-top: 0.5rem; }
+.radio-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--text-600);
+  cursor: pointer;
+}
+.radio-opt input { accent-color: var(--green); width: 18px; height: 18px; }
+.radio-row.error { outline: none; }
+.radio-row.error .radio-opt { color: #e5484d; }

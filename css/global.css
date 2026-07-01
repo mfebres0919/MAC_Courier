@@ -588,6 +588,16 @@ p.lead {
 .nav-drop-toggle:hover,
 .nav-links a.active { color: var(--green-ink); }
 
+/* Active section (scroll-spy) — green-ink with a green-ink underline */
+.nav-links a.active,
+.nav-links .nav-drop-toggle.active {
+  color: var(--green-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--green-ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+}
+
 /* ── Dropdown chevron icon ───────────────────────────────────────────────── */
 .nav-chevron {
   width: 0.875rem;

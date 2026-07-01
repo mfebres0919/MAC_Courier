@@ -304,3 +304,186 @@ document.addEventListener('DOMContentLoaded', () => {
   if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
   if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
 })();
+
+
+/* ===========================================================================
+   SCROLL-SPY — highlight the nav link for the section in view
+=========================================================================== */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var spies = Array.prototype.slice.call(document.querySelectorAll('#navbar [data-spy]'));
+  if (!spies.length) return;
+
+  var pairs = spies
+    .map(function (el) {
+      var sec = document.getElementById(el.getAttribute('data-spy'));
+      return sec ? { el: el, sec: sec } : null;
+    })
+    .filter(Boolean);
+  if (!pairs.length) return;
+
+  function setActive(id) {
+    spies.forEach(function (el) {
+      el.classList.toggle('active', el.getAttribute('data-spy') === id);
+    });
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) setActive(e.target.id);
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  pairs.forEach(function (p) { obs.observe(p.sec); });
+})();
+
+
+/* ===========================================================================
+   AUTO-REVEAL — give content a staggered fade-in as it scrolls into view.
+   Fills gaps not already covered by manual .reveal elements.
+=========================================================================== */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+
+  var sel = 'main section:not(#hero) :is(' +
+    '.eyebrow, h2, h3, p, li, .btn-primary, .btn-ghost-dark,' +
+    '.service-card, .process-card, .why-card, .timeline-step,' +
+    '.about-photo, .about-figure, .about-quote, .coverage-map-panel, .cov-card, .hero-stat' +
+    ')';
+
+  var counts = {};
+  document.querySelectorAll(sel).forEach(function (el) {
+    if (el.classList.contains('reveal')) return;                 // already animates
+    if (el.closest('.reveal')) return;                           // ancestor animates
+    if (el.closest('.marquee, .trust-marquee, #navbar')) return; // never hide bars/nav
+
+    el.classList.add('reveal', 'fade-up');
+
+    var sec = el.closest('section');
+    var key = sec ? (sec.id || 'x') : 'x';
+    var i = counts[key] || 0;
+    counts[key] = i + 1;
+    el.style.transitionDelay = (Math.min(i % 6, 5) * 0.07) + 's';
+  });
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal:not(.is-visible)').forEach(function (el) { obs.observe(el); });
+})();
+
+
+/* ===========================================================================
+   JOIN OUR TEAM — front-end form validation + success state
+   (Backend submission is wired later by the backend team.)
+=========================================================================== */
+(function () {
+  var form = document.getElementById('careersForm');
+  var success = document.getElementById('careersSuccess');
+  if (!form || !success) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var valid = true;
+
+    // Text / email / date / select fields
+    form.querySelectorAll('input[required]:not([type="radio"]), select[required], textarea[required]').forEach(function (field) {
+      var ok = field.value.trim() !== '';
+      if (field.type === 'email') {
+        ok = ok && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim());
+      }
+      field.classList.toggle('error', !ok);
+      if (!ok) valid = false;
+    });
+
+    // Required radio groups (e.g. work authorization)
+    var radioGroups = {};
+    form.querySelectorAll('input[type="radio"][required]').forEach(function (r) { radioGroups[r.name] = true; });
+    Object.keys(radioGroups).forEach(function (name) {
+      var checked = form.querySelector('input[name="' + name + '"]:checked');
+      var row = form.querySelector('input[name="' + name + '"]').closest('.radio-row');
+      if (row) row.classList.toggle('error', !checked);
+      if (!checked) valid = false;
+    });
+
+    if (!valid) return;
+
+    // Front-end only for now — hand off to backend endpoint when ready.
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+
+  // Clear the error state as the user fixes a field
+  form.addEventListener('input', function (e) {
+    if (e.target.classList.contains('error')) e.target.classList.remove('error');
+    if (e.target.type === 'radio') {
+      var row = e.target.closest('.radio-row');
+      if (row) row.classList.remove('error');
+    }
+  });
+})();
+
+
+/* ===========================================================================
+   SCHEDULE NOW — multi-step order wizard
+=========================================================================== */
+(function () {
+  var form = document.getElementById('scheduleForm');
+  if (!form) return;
+
+  var card = form.closest('.schedule-card') || form.parentElement;
+  var steps = Array.prototype.slice.call(form.querySelectorAll('.qf-step'))
+    .filter(function (s) { return !s.classList.contains('qf-success'); });
+  var success = form.querySelector('.qf-success');
+  var bar = card.querySelector('.qf-progress-bar span');
+  var text = card.querySelector('.qf-progress-text');
+  var backBtn = form.querySelector('.qf-back');
+  var nextBtn = form.querySelector('.qf-next');
+  var submitBtn = form.querySelector('.qf-submit');
+  var i = 0;
+
+  function show(n) {
+    i = n;
+    steps.forEach(function (s, idx) { s.classList.toggle('is-active', idx === n); });
+    if (bar) bar.style.width = ((n + 1) / steps.length * 100) + '%';
+    if (text) text.textContent = 'Step ' + (n + 1) + ' of ' + steps.length;
+    backBtn.style.display = n === 0 ? 'none' : '';
+    nextBtn.style.display = n === steps.length - 1 ? 'none' : '';
+    submitBtn.style.display = n === steps.length - 1 ? '' : 'none';
+  }
+
+  function validate(n) {
+    var ok = true, first = null;
+    steps[n].querySelectorAll('[required]').forEach(function (f) {
+      var good = f.value.trim() !== '';
+      if (f.type === 'email') good = good && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim());
+      f.classList.toggle('qf-invalid', !good);
+      if (!good) { ok = false; if (!first) first = f; }
+    });
+    if (first) first.focus();
+    return ok;
+  }
+
+  nextBtn.addEventListener('click', function () { if (validate(i)) show(i + 1); });
+  backBtn.addEventListener('click', function () { if (i > 0) show(i - 1); });
+  form.addEventListener('input', function (e) {
+    if (e.target.classList.contains('qf-invalid')) e.target.classList.remove('qf-invalid');
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!validate(i)) return;
+    steps.forEach(function (s) { s.classList.remove('is-active'); });
+    if (success) success.classList.add('is-active');
+    if (bar) bar.style.width = '100%';
+    if (text) text.textContent = 'Done';
+    var nav = form.querySelector('.qf-nav');
+    if (nav) nav.style.display = 'none';
+  });
+
+  show(0);
+})();
