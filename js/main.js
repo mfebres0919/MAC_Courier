@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (drawerClose) drawerClose.addEventListener('click', closeMobileMenu);
 
+    var navOverlay = document.querySelector('.nav-overlay');
+    if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
+
     if (drawer) {
       drawer.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', closeMobileMenu);
@@ -310,7 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
    SCROLL-SPY — highlight the nav link for the section in view
 =========================================================================== */
 (function () {
-  if (!('IntersectionObserver' in window)) return;
   var spies = Array.prototype.slice.call(document.querySelectorAll('#navbar [data-spy]'));
   if (!spies.length) return;
 
@@ -322,19 +324,28 @@ document.addEventListener('DOMContentLoaded', () => {
     .filter(Boolean);
   if (!pairs.length) return;
 
-  function setActive(id) {
+  var ticking = false;
+
+  function update() {
+    ticking = false;
+    var line = window.scrollY + window.innerHeight * 0.32; // activation line, ~1/3 down
+    var current = null;
+    pairs.forEach(function (p) {
+      var top = p.sec.getBoundingClientRect().top + window.scrollY;
+      if (top <= line) current = p; // last section whose top has passed the line
+    });
     spies.forEach(function (el) {
-      el.classList.toggle('active', el.getAttribute('data-spy') === id);
+      el.classList.toggle('active', !!current && el === current.el);
     });
   }
 
-  var obs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) setActive(e.target.id);
-    });
-  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  function onScroll() {
+    if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+  }
 
-  pairs.forEach(function (p) { obs.observe(p.sec); });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
 })();
 
 
