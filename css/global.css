@@ -561,8 +561,10 @@ p.lead {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-2xl);
+  gap: var(--space-lg);
 }
+
+@media (max-width: 1320px) { .nav-links { gap: var(--space-md); } }
 
 .nav-links > li { position: relative; }
 
@@ -850,7 +852,7 @@ p.lead {
 }
 
 /* ── Responsive breakpoints ──────────────────────────────────────────────── */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .nav-links,
   .nav-actions { display: none; }
   .nav-hamburger { display: flex; }

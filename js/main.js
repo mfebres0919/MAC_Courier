@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      if (window.innerWidth > 1024) {
+      if (window.innerWidth > 1200) {
         closeMobileMenu();
         closeAllDropdowns();
       }
