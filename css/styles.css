@@ -1264,3 +1264,151 @@
 }
 .why-nav button:hover { background: var(--green); border-color: var(--green); color: var(--black); }
 .why-nav button svg { width: 1.25rem; height: 1.25rem; }
+
+
+/* =============================================================================
+   07 — ABOUT
+   Heading (spans left), square photo (bottom-left), text column (middle),
+   tall image with badge (right).
+============================================================================= */
+
+#about { background-color: var(--bg-100); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+}
+
+@media (min-width: 992px) {
+  .about-grid {
+    grid-template-columns: 0.9fr 1.1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: var(--space-2xl) var(--space-2xl);
+    align-items: start;
+  }
+  .about-head   { grid-column: 1 / 3; grid-row: 1; }
+  .about-photo  { grid-column: 1; grid-row: 2; align-self: start; }
+  .about-text   { grid-column: 2; grid-row: 2; }
+  /* Figure sits in row 2 too, so its top lines up with the left photo */
+  .about-figure { grid-column: 3; grid-row: 2; align-self: start; }
+}
+
+.about-head .eyebrow { margin-bottom: var(--space-sm); }
+.about-head h2 { max-width: 18ch; }
+
+/* ── Left square photo (offset frame) ────────────────────────────────────── */
+.about-photo {
+  position: relative;
+}
+.about-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(-16px, -16px);
+  border: 2px solid var(--green);
+  border-radius: var(--radius-card);
+  z-index: 0;
+}
+.about-photo img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+}
+
+/* ── Middle text column ──────────────────────────────────────────────────── */
+.about-text > p { color: var(--text-700); margin-bottom: var(--space-lg); }
+
+.about-quote {
+  background-color: var(--green-tint);
+  border-left: 4px solid var(--green);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  font-weight: 600;
+  color: var(--text-100);
+  font-style: italic;
+  max-width: none;
+}
+
+.about-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+.about-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  color: var(--text-600);
+}
+.about-list svg { width: 1.2rem; height: 1.2rem; color: var(--green-ink); flex-shrink: 0; }
+
+.about-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+.about-signature {
+  font-family: 'Sacramento', cursive;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--text-100);
+}
+
+/* ── Right tall image + badge ────────────────────────────────────────────── */
+/* Figure matches the image's aspect ratio so the transparent top-left notch
+   stays in a fixed spot; the badge is sized in % + cqw so it always fills it. */
+.about-figure {
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 1108 / 1376;
+}
+.about-figure-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+}
+
+.about-badge {
+  position: absolute;
+  top: -2%;
+  left: 0;
+  z-index: 2;
+  width: 32%;
+  height: 17%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 4.5cqw;
+  background-color: var(--green);
+  color: var(--black);
+  border-radius: var(--radius-card) 0 var(--radius-card) 0;
+}
+.about-badge strong {
+  font-family: var(--font-heading);
+  font-size: 9cqw;
+  line-height: 1;
+  letter-spacing: var(--ls-heading);
+}
+.about-badge span {
+  font-family: var(--font-body);
+  font-size: 2.7cqw;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.15;
+  margin-top: 0.4cqw;
+}
+
+@media (max-width: 991px) {
+  .about-photo::before { transform: translate(-10px, -10px); }
+}
