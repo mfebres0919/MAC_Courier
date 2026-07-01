@@ -145,27 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ===========================================================================
-     06 — SCROLL ANIMATIONS — INTERSECTIONOBSERVER
+     06 — SCROLL ANIMATIONS
+     Handled by the JS-driven reveal system near the bottom of this file
+     (Web Animations API — not affected by CSS reduce-motion or transitions).
   =========================================================================== */
-  const revealElements = document.querySelectorAll('.reveal');
-
-  if (revealElements.length > 0) {
-    const isMobile = window.innerWidth < 768;
-
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: isMobile ? 0.05 : 0.15,
-      rootMargin: isMobile ? '0px' : '0px 0px -40px 0px'
-    });
-
-    revealElements.forEach(el => revealObserver.observe(el));
-  }
 
 
   /* ===========================================================================
@@ -350,40 +333,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /* ===========================================================================
-   AUTO-REVEAL — give content a staggered fade-in as it scrolls into view.
-   Fills gaps not already covered by manual .reveal elements.
+   SCROLL REVEAL — JS-driven fade/slide-in as each section scrolls into view.
+   Uses the Web Animations API so it plays regardless of CSS transitions or
+   the OS "reduce motion" setting. Also auto-tags content that lacks .reveal.
 =========================================================================== */
 (function () {
-  if (!('IntersectionObserver' in window)) return;
-
+  // 1) Auto-tag content in every section (except hero) so it all animates.
   var sel = 'main section:not(#hero) :is(' +
-    '.eyebrow, h2, h3, p, li, .btn-primary, .btn-ghost-dark,' +
+    '.eyebrow, h2, h3, p, li, .btn-primary, .btn-ghost-dark, .btn-ghost-light,' +
     '.service-card, .process-card, .why-card, .timeline-step,' +
     '.about-photo, .about-figure, .about-quote, .coverage-map-panel, .cov-card, .hero-stat' +
     ')';
-
   var counts = {};
   document.querySelectorAll(sel).forEach(function (el) {
-    if (el.classList.contains('reveal')) return;                 // already animates
-    if (el.closest('.reveal')) return;                           // ancestor animates
+    if (el.classList.contains('reveal')) return;                 // already tagged
+    if (el.closest('.reveal')) return;                           // ancestor is a reveal block
     if (el.closest('.marquee, .trust-marquee, #navbar')) return; // never hide bars/nav
-
     el.classList.add('reveal', 'fade-up');
-
     var sec = el.closest('section');
     var key = sec ? (sec.id || 'x') : 'x';
-    var i = counts[key] || 0;
-    counts[key] = i + 1;
-    el.style.transitionDelay = (Math.min(i % 6, 5) * 0.07) + 's';
+    var i = counts[key] || 0; counts[key] = i + 1;
+    el.dataset.revealDelay = Math.min(i % 6, 5) * 80; // stagger within a section
   });
 
+  var items = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!items.length) return;
+
+  // 2) Helpers
+  function startTransform(el) {
+    if (el.classList.contains('fade-left'))  return 'translateX(48px)';
+    if (el.classList.contains('fade-right')) return 'translateX(-48px)';
+    if (el.classList.contains('fade-down'))  return 'translateY(-42px)';
+    if (el.classList.contains('fade-in'))    return 'none';
+    return 'translateY(42px)'; // fade-up (default)
+  }
+  function delayFor(el) {
+    var m = (el.className || '').match(/\bdelay-(\d)\b/);
+    if (m) return parseInt(m[1], 10) * 90;
+    return parseInt(el.dataset.revealDelay || '0', 10);
+  }
+  function show(el) {
+    el.classList.add('is-visible');           // CSS fallback / final state
+    if (typeof el.animate !== 'function') { el.style.opacity = '1'; el.style.transform = 'none'; return; }
+    el.animate(
+      [{ opacity: 0, transform: startTransform(el) }, { opacity: 1, transform: 'none' }],
+      { duration: 700, delay: delayFor(el), easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' }
+    ).addEventListener('finish', function () {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  }
+
+  // 3) Reveal on scroll into view (fallback: reveal everything immediately)
+  if (!('IntersectionObserver' in window)) { items.forEach(show); return; }
+
+  var isMobile = window.innerWidth < 768;
   var obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+      if (e.isIntersecting) { show(e.target); obs.unobserve(e.target); }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.05, rootMargin: isMobile ? '0px 0px -10% 0px' : '0px 0px -15% 0px' });
 
-  document.querySelectorAll('.reveal:not(.is-visible)').forEach(function (el) { obs.observe(el); });
+  items.forEach(function (el) { obs.observe(el); });
 })();
 
 

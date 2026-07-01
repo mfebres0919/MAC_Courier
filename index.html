@@ -1195,8 +1195,8 @@
       var map = L.map(el, {
         center: [33.86, -84.40],
         zoom: 9,
-        zoomControl: false,
-        scrollWheelZoom: false,
+        zoomControl: true,        // +/- buttons so users can zoom in AND out
+        scrollWheelZoom: false,   // keep off so it doesn't hijack page scroll
         attributionControl: true
       });
 
