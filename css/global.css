@@ -1,5 +1,5 @@
 /* =============================================================================
-   METRO ATLANTA COURIER — global.css
+   GREENLIGHT COURIER — global.css
    MigsFlow Web Design
 
    Standardized, site-wide styles shared across every page.
@@ -547,6 +547,41 @@ p.lead {
   width: auto;
 }
 
+/* ── Brandmark wordmark (nav + footer) ───────────────────────────────────── */
+.brandmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.brandmark-initials {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  line-height: 0.82;
+  letter-spacing: 0.02em;
+  color: var(--text-100);
+}
+
+.brandmark-dot { color: var(--green-ink); }
+
+.brandmark-words {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.625rem;
+  line-height: 1.25;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-600);
+  border-left: 2px solid var(--green);
+  padding-left: 0.5rem;
+}
+
+.brandmark-lg .brandmark-initials { font-size: 3rem; }
+.brandmark-lg .brandmark-words { font-size: 0.75rem; padding-left: 0.625rem; }
+
 /* Text fallback / wordmark beside logo */
 .nav-logo .nav-logo-text {
   font-family: var(--font-heading);
@@ -864,6 +899,8 @@ p.lead {
   .nav-inner { height: 4.25rem; }
   .nav-logo img { height: 2.25rem; }
   .nav-logo .nav-logo-text { font-size: 1.25rem; }
+  .nav-logo .brandmark-initials { font-size: 1.75rem; }
+  .nav-logo .brandmark-words { font-size: 0.5rem; letter-spacing: 0.12em; padding-left: 0.4375rem; }
 }
 
 
@@ -880,37 +917,41 @@ p.lead {
 @keyframes spin     { to { transform: rotate(360deg); } }
 @keyframes ping     { 75%, 100% { transform: scale(2.2); opacity: 0; } }
 
-/* ── Reveal base ─────────────────────────────────────────────────────────── */
-.reveal { opacity: 0; }
-.reveal.is-visible { opacity: 1; }
+/* ── Load-on-page-ready variants ─────────────────────────────────────────── */
+/* These fire immediately on load. The :not(.reveal) guard is important: a
+   scroll-reveal element must NOT also play a load animation, or it fades in
+   once at load and then again when the observer reaches it. */
+.fade-in:not(.reveal)   { animation: fadeIn 0.6s ease forwards; }
+.fade-up:not(.reveal)   { animation: fadeUp 0.65s ease forwards; }
+.fade-down:not(.reveal) { animation: fadeDown 0.65s ease forwards; }
+.fade-left:not(.reveal) { animation: fadeLeft 0.65s ease forwards; }
+.fade-right:not(.reveal){ animation: fadeRight 0.65s ease forwards; }
 
-/* Load-on-page-ready variants (no .reveal) */
-.fade-in   { animation: fadeIn 0.6s ease forwards; }
-.fade-up   { animation: fadeUp 0.65s ease forwards; }
-.fade-down { animation: fadeDown 0.65s ease forwards; }
-.fade-left { animation: fadeLeft 0.65s ease forwards; }
-.fade-right{ animation: fadeRight 0.65s ease forwards; }
+/* ── Scroll-reveal base ──────────────────────────────────────────────────── */
+/* Everything here is scoped to .js (set by the bootstrap script in <head>), so
+   if JavaScript never runs the content is simply visible instead of blank.
+   The hidden state is all CSS does — the motion is driven by main.js via the
+   Web Animations API. */
+.js .reveal            { opacity: 0; }
+.js .reveal.fade-in    { transform: none; }
+.js .reveal.fade-up    { transform: translateY(32px); }
+.js .reveal.fade-down  { transform: translateY(-32px); }
+.js .reveal.fade-left  { transform: translateX(40px); }
+.js .reveal.fade-right { transform: translateX(-40px); }
 
-/* Scroll-triggered variants (.reveal + direction) */
-/* Initial hidden state only — motion is driven by JS (Web Animations API) */
-.reveal.fade-in   { transform: none; }
-.reveal.fade-up   { transform: translateY(42px); }
-.reveal.fade-down { transform: translateY(-42px); }
-.reveal.fade-left { transform: translateX(48px); }
-.reveal.fade-right{ transform: translateX(-48px); }
-
-.reveal.fade-up.is-visible,
-.reveal.fade-down.is-visible { opacity: 1; transform: translateY(0); }
-.reveal.fade-left.is-visible,
-.reveal.fade-right.is-visible { opacity: 1; transform: translateX(0); }
+/* Resting state, applied by JS as each element is revealed. */
+.js .reveal.is-visible { opacity: 1; transform: none; }
 
 /* ── Stagger delays ──────────────────────────────────────────────────────── */
-.delay-1 { transition-delay: 0.1s !important; animation-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s !important; animation-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s !important; animation-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s !important; animation-delay: 0.4s; }
-.delay-5 { transition-delay: 0.5s !important; animation-delay: 0.5s; }
-.delay-6 { transition-delay: 0.6s !important; animation-delay: 0.6s; }
+/* animation-delay only — main.js reads the class name for scroll reveals.
+   (These used to set transition-delay !important, which also delayed the
+   card hover lifts by up to 0.4s.) */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
 
 /* ── Live pulse dot (GPS / active indicator) ─────────────────────────────── */
 .pulse-dot {
@@ -1026,7 +1067,7 @@ p.lead {
   .footer-inner { grid-template-columns: 1.7fr 1fr 1fr 1.3fr; gap: var(--space-2xl); }
 }
 
-.footer-logo { height: 3rem; width: auto; margin-bottom: var(--space-md); }
+.footer-logo { margin-bottom: var(--space-md); }
 
 .footer-brand p {
   color: var(--text-700);
@@ -1093,10 +1134,5 @@ p.lead {
    (These reveals are a client-requested effect; the blanket reduce-motion rule
    above would otherwise make them snap in instantly with no visible fade.)
 ============================================================================= */
-@media (prefers-reduced-motion: reduce) {
-  .reveal { transition-duration: 0.7s !important; }
-  .reveal.fade-up,
-  .reveal.fade-down,
-  .reveal.fade-left,
-  .reveal.fade-right { transition-property: opacity, transform !important; }
-}
+/* main.js handles this: under reduced motion the reveals still fade in and
+   still cascade, but they no longer slide. Nothing to override here. */

@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Metro Atlanta Courier — same-day courier and delivery service for medical, legal, corporate, and rush deliveries across Metro Atlanta. Real-time GPS tracking, 6 AM–11 PM, 7 days a week.">
+  <meta name="description" content="Greenlight Courier — same-day courier and delivery service for medical, legal, corporate, and rush deliveries across Metro Atlanta. Real-time GPS tracking, 6 AM–11 PM, 7 days a week.">
 
-  <title>Metro Atlanta Courier | Same-Day Courier & Delivery in Atlanta</title>
+  <title>Greenlight Courier | Same-Day Courier & Delivery in Atlanta</title>
 
   <!-- =====================================================================
      PRELOAD — critical above-the-fold assets for best LCP/FCP
@@ -33,6 +33,22 @@
 
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- =====================================================================
+     REVEAL BOOTSTRAP — marks the page as script-enabled so the scroll-reveal
+     elements can start hidden. Runs here in <head> so there is no flash of
+     visible content before they hide. If main.js never boots, the failsafe
+     drops the class again and everything shows normally.
+  ====================================================================== -->
+  <script>
+    (function () {
+      var h = document.documentElement;
+      h.classList.add('js');
+      setTimeout(function () {
+        if (!h.dataset.revealReady) h.classList.remove('js');
+      }, 2500);
+    })();
+  </script>
 </head>
 
 <body>
@@ -59,7 +75,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
               d="M2.25 6.338c0-.414.336-.75.75-.75h2.25a.75.75 0 0 1 .743.647l.63 4.2a.75.75 0 0 1-.44.813l-1.27.508a11.25 11.25 0 0 0 5.38 5.38l.508-1.27a.75.75 0 0 1 .814-.44l4.2.63a.75.75 0 0 1 .647.743V18a.75.75 0 0 1-.75.75C9.716 18.75 2.25 11.284 2.25 6.338Z"/>
           </svg>
-          <a href="tel:+14709992922">(470) 999-2922</a>
+          <a href="tel:+14045550142">(404) 555-0142</a>
         </span>
 
         <!-- Address -->
@@ -68,7 +84,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
           </svg>
-          P.O. Box 671054, Marietta, GA 30006
+          P.O. Box 55018, Atlanta, GA 30355
         </span>
       </div>
 
@@ -99,13 +115,13 @@
   <header id="navbar">
     <div class="container nav-inner">
 
-      <!-- Logo — save the uploaded MAC logo as images/logo.png.
-           Until then, a styled wordmark shows automatically as a fallback. -->
-      <a href="index.html" class="nav-logo" aria-label="Metro Atlanta Courier — Home">
-        <img src="images/logo.jpg" alt="Metro Atlanta Courier" width="180" height="44"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
-        <span class="nav-logo-text" style="display:none;">
-          MAC<span class="accent" style="color:var(--green-ink);">.</span>
+      <!-- Logo — typographic wordmark built from the site's own fonts,
+           so it stays crisp at any size and needs no image asset. -->
+      <a href="index.html" class="nav-logo brandmark" aria-label="Greenlight Courier — Home">
+        <span class="brandmark-initials" aria-hidden="true">GLC<span class="brandmark-dot">.</span></span>
+        <span class="brandmark-words" aria-hidden="true">
+          <span>Greenlight</span>
+          <span>Courier</span>
         </span>
       </a>
 
@@ -294,7 +310,7 @@
 
             <!-- Image with live badge -->
             <div class="hero-card-media">
-              <img src="images/hero-3.png" alt="Metro Atlanta Courier driver with packages" width="380" height="240" loading="eager" decoding="async">
+              <img src="images/hero-3.png" alt="Greenlight Courier driver with packages" width="380" height="240" loading="eager" decoding="async">
               <span class="hero-card-badge">
                 <span class="pulse-dot"></span>
                 Live GPS Tracking
@@ -631,7 +647,7 @@
         <!-- Left: real Atlanta map with neon service-area markers -->
         <div class="coverage-map-panel reveal fade-right">
           <div class="coverage-map-bar">
-            <span class="coverage-map-title">Metro Atlanta Courier — Coverage</span>
+            <span class="coverage-map-title">Greenlight Courier — Coverage</span>
             <span class="coverage-map-dots"><i></i><i></i><i class="on"></i></span>
           </div>
           <div class="cov-marquee" aria-label="Areas we serve">
@@ -641,7 +657,7 @@
             </div>
           </div>
           <div class="coverage-map-stage">
-            <div id="coverageMap" class="coverage-map-leaflet" role="img" aria-label="Map of Metro Atlanta showing the areas Metro Atlanta Courier serves"></div>
+            <div id="coverageMap" class="coverage-map-leaflet" role="img" aria-label="Map of Metro Atlanta showing the areas Greenlight Courier serves"></div>
             <span class="coverage-map-legend"><span class="pulse-dot"></span> Live service areas</span>
           </div>
         </div>
@@ -701,7 +717,7 @@
               <li><svg class="cov-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.1 14.2-3.6-3.6 1.4-1.4 2.2 2.2 4.9-4.9 1.4 1.4-6.3 6.3Z"/></svg>Dedicated account support</li>
               </ul>
             </div>
-            <a href="mailto:assist@metroatlantacourier.com" class="btn-primary">Email Us <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+            <a href="mailto:assist@greenlightcourier.com" class="btn-primary">Email Us <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
           </div>
           </div>
         </div>
@@ -717,8 +733,8 @@
     <section id="why" class="section-padding">
 
       <!-- Bleed images: big top-left, small top-right -->
-      <img class="why-img-main" src="images/service-area-bg.png" alt="The Metro Atlanta Courier team on the move" width="640" height="560" loading="lazy" decoding="async">
-      <img class="why-img-corner" src="images/hero-2.png" alt="Metro Atlanta Courier driver" width="280" height="190" loading="lazy" decoding="async">
+      <img class="why-img-main" src="images/service-area-bg.png" alt="The Greenlight Courier team on the move" width="640" height="560" loading="lazy" decoding="async">
+      <img class="why-img-corner" src="images/hero-2.png" alt="Greenlight Courier driver" width="280" height="190" loading="lazy" decoding="async">
 
       <div class="container why-inner">
 
@@ -805,17 +821,17 @@
           <!-- Heading (spans left two columns) -->
           <div class="about-head reveal fade-up">
             <p class="eyebrow">About Us</p>
-            <h2>About <span class="accent">Metro Atlanta Courier</span></h2>
+            <h2>About <span class="accent">Greenlight Courier</span></h2>
           </div>
 
           <!-- Left square photo -->
           <div class="about-photo reveal fade-up">
-            <img src="images/hero-1.png" alt="Metro Atlanta Courier driver with packages" width="480" height="480" loading="lazy" decoding="async">
+            <img src="images/hero-1.png" alt="Greenlight Courier driver with packages" width="480" height="480" loading="lazy" decoding="async">
           </div>
 
           <!-- Middle text column -->
           <div class="about-text reveal fade-up">
-            <p>Metro Atlanta Courier is the result of over 20 years of showing up, learning the hard way, and never compromising on service &mdash; built on the streets of Atlanta and earned through every delivery.</p>
+            <p>Greenlight Courier is the result of over 20 years of showing up, learning the hard way, and never compromising on service &mdash; built on the streets of Atlanta and earned through every delivery.</p>
 
             <blockquote class="about-quote">"We wanted to learn the business the right way &mdash; not just drive, but understand every part of what makes a courier company work."</blockquote>
 
@@ -832,7 +848,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
                 </svg>
               </a>
-              <span class="about-signature">Metro Atlanta Courier</span>
+              <span class="about-signature">Greenlight Courier</span>
             </div>
           </div>
 
@@ -840,7 +856,7 @@
                the badge is sized as a % of the figure so it fills that notch. -->
           <div class="about-figure reveal fade-left">
             <span class="about-badge"><strong>20+</strong><span>Years<br>Experience</span></span>
-            <img class="about-figure-img" src="images/about-img-2.png" alt="The Metro Atlanta Courier team"
+            <img class="about-figure-img" src="images/about-img-2.png" alt="The Greenlight Courier team"
                  width="1108" height="1376" loading="lazy" decoding="async">
           </div>
 
@@ -871,8 +887,8 @@
         <!-- Left: pitch + benefits -->
         <div class="careers-intro reveal fade-right">
           <p class="eyebrow">Join Our Team</p>
-          <h2>Drive With <span class="accent">MAC</span></h2>
-          <p>Metro Atlanta Courier is growing, and we're looking for reliable, professional contractors who take pride in getting it there on time. If that sounds like you, let's talk.</p>
+          <h2>Drive With <span class="accent">GLC</span></h2>
+          <p>Greenlight Courier is growing, and we're looking for reliable, professional contractors who take pride in getting it there on time. If that sounds like you, let's talk.</p>
           <div class="careers-benefits">
             <div class="careers-benefit">
               <span class="careers-benefit-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.7' d='M12 6v12m-3-2.82.88.66c1.17.88 3.07.88 4.24 0 1.17-.88 1.17-2.3 0-3.18-.59-.44-1.35-.66-2.12-.66-.73 0-1.46-.22-2.02-.66-1.13-.88-1.13-2.3 0-3.18s2.97-.88 4.1 0l.42.31M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'/></svg></span>
@@ -951,7 +967,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
             </svg>
             <h3>Application Received!</h3>
-            <p>Thanks for your interest in driving with MAC. Our team will be in touch shortly.</p>
+            <p>Thanks for your interest in driving with GLC. Our team will be in touch shortly.</p>
           </div>
         </div>
 
@@ -1100,7 +1116,13 @@
 
       <!-- Brand + social -->
       <div class="footer-col footer-brand">
-        <img class="footer-logo" src="images/logo.jpg" alt="Metro Atlanta Courier">
+        <span class="brandmark brandmark-lg footer-logo" role="img" aria-label="Greenlight Courier">
+          <span class="brandmark-initials" aria-hidden="true">GLC<span class="brandmark-dot">.</span></span>
+          <span class="brandmark-words" aria-hidden="true">
+            <span>Greenlight</span>
+            <span>Courier</span>
+          </span>
+        </span>
         <p>Atlanta's trusted same-day courier — moving medical, legal, corporate &amp; rush deliveries across the metro, on time every run.</p>
         <div class="footer-social">
           <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></svg></a>
@@ -1142,15 +1164,15 @@
         <ul>
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M2.25 6.34c0-.41.34-.75.75-.75h2.25a.75.75 0 0 1 .74.65l.63 4.2a.75.75 0 0 1-.44.81l-1.27.51a11.25 11.25 0 0 0 5.38 5.38l.51-1.27a.75.75 0 0 1 .81-.44l4.2.63a.75.75 0 0 1 .65.74V18a.75.75 0 0 1-.75.75C9.72 18.75 2.25 11.28 2.25 6.34Z"/></svg>
-            <a href="tel:+14709992922">(470) 999-2922</a>
+            <a href="tel:+14045550142">(404) 555-0142</a>
           </li>
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5H4.5a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.24l-9.75 5.85-9.75-5.85v-.24"/></svg>
-            <a href="mailto:dispatch@metroatlantacourier.com">dispatch@metroatlantacourier.com</a>
+            <a href="mailto:dispatch@greenlightcourier.com">dispatch@greenlightcourier.com</a>
           </li>
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M19.5 10.5c0 7.14-7.5 11.25-7.5 11.25S4.5 17.64 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
-            <span>P.O. Box 671054, Marietta, GA 30006</span>
+            <span>P.O. Box 55018, Atlanta, GA 30355</span>
           </li>
           <li>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke-width="1.6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 7v5l3 2"/></svg>
@@ -1163,7 +1185,7 @@
 
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <p>&copy; 2026 Metro Atlanta Courier. All rights reserved.</p>
+        <p>&copy; 2026 Greenlight Courier. All rights reserved.</p>
         <div class="footer-legal">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>

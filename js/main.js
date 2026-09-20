@@ -1,5 +1,5 @@
 /* =============================================================================
-   METRO ATLANTA COURIER — main.js
+   GREENLIGHT COURIER — main.js
    MigsFlow Web Design
 
    Loads on EVERY page.
@@ -333,66 +333,129 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /* ===========================================================================
-   SCROLL REVEAL — JS-driven fade/slide-in as each section scrolls into view.
-   Uses the Web Animations API so it plays regardless of CSS transitions or
-   the OS "reduce motion" setting. Also auto-tags content that lacks .reveal.
+   SCROLL REVEAL — content fades in as each section scrolls into view.
+
+   How it works:
+   • Elements start hidden via `.js .reveal` in global.css, so the page still
+     renders fine if this script never runs.
+   • An IntersectionObserver reveals them. Everything that crosses into view in
+     the same frame is treated as one batch, sorted top-to-bottom then
+     left-to-right, and staggered — so a row of cards arrives one by one in
+     reading order instead of all at once or in a scrambled order. Batch
+     position is the only thing that sets the stagger; the .delay-N classes
+     in the markup apply to the on-load animations only.
+   • Motion runs on the Web Animations API with `fill: backwards`, so once an
+     element finishes the animation stops applying and the element's own CSS
+     takes over again (this is what lets the card hover lifts work).
 =========================================================================== */
 (function () {
-  // 1) Auto-tag content in every section (except hero) so it all animates.
+  var DURATION  = 850;   // ms — length of one element's fade
+  var STEP      = 110;   // ms — gap between consecutive elements in a batch
+  var MAX_STEPS = 6;     // cap the cascade so a big batch doesn't crawl
+  var SHIFT_Y   = 32;    // px of vertical travel
+  var SHIFT_X   = 40;    // px of horizontal travel
+  var EASING    = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+  // Reduced motion: still fade, still cascade, but don't slide anything.
+  var reduced = !!(window.matchMedia &&
+                   window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if (reduced) DURATION = 600;
+
+  // 1) Auto-tag section content that wasn't tagged by hand in the markup.
   var sel = 'main section:not(#hero) :is(' +
     '.eyebrow, h2, h3, p, li, .btn-primary, .btn-ghost-dark, .btn-ghost-light,' +
     '.service-card, .process-card, .why-card, .timeline-step,' +
     '.about-photo, .about-figure, .about-quote, .coverage-map-panel, .cov-card, .hero-stat' +
     ')';
-  var counts = {};
   document.querySelectorAll(sel).forEach(function (el) {
-    if (el.classList.contains('reveal')) return;                 // already tagged
-    if (el.closest('.reveal')) return;                           // ancestor is a reveal block
+    // .closest() matches the element itself, so this covers both "already
+    // tagged" and "lives inside a block that reveals as a unit".
+    if (el.closest('.reveal')) return;
     if (el.closest('.marquee, .trust-marquee, #navbar')) return; // never hide bars/nav
     el.classList.add('reveal', 'fade-up');
-    var sec = el.closest('section');
-    var key = sec ? (sec.id || 'x') : 'x';
-    var i = counts[key] || 0; counts[key] = i + 1;
-    el.dataset.revealDelay = Math.min(i % 6, 5) * 80; // stagger within a section
   });
+
+  // Tell the <head> failsafe we booted, so it leaves the .js class alone.
+  document.documentElement.dataset.revealReady = '1';
 
   var items = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
   if (!items.length) return;
 
   // 2) Helpers
   function startTransform(el) {
-    if (el.classList.contains('fade-left'))  return 'translateX(48px)';
-    if (el.classList.contains('fade-right')) return 'translateX(-48px)';
-    if (el.classList.contains('fade-down'))  return 'translateY(-42px)';
+    if (reduced) return 'none';
+    if (el.classList.contains('fade-left'))  return 'translateX(' + SHIFT_X + 'px)';
+    if (el.classList.contains('fade-right')) return 'translateX(-' + SHIFT_X + 'px)';
+    if (el.classList.contains('fade-down'))  return 'translateY(-' + SHIFT_Y + 'px)';
     if (el.classList.contains('fade-in'))    return 'none';
-    return 'translateY(42px)'; // fade-up (default)
+    return 'translateY(' + SHIFT_Y + 'px)'; // fade-up (default)
   }
-  function delayFor(el) {
-    var m = (el.className || '').match(/\bdelay-(\d)\b/);
-    if (m) return parseInt(m[1], 10) * 90;
-    return parseInt(el.dataset.revealDelay || '0', 10);
+
+  // Horizontal card rails (the services row, the "why" rail) scroll sideways,
+  // so their off-screen cards never intersect the viewport and would sit at
+  // opacity 0 forever. Treat a rail as one group: when any card in it comes
+  // into view, cascade the whole rail.
+  function railOf(el) {
+    var p = el.parentElement;
+    while (p && p !== document.body) {
+      var ox = getComputedStyle(p).overflowX;
+      if ((ox === 'auto' || ox === 'scroll') && p.scrollWidth > p.clientWidth + 4) return p;
+      p = p.parentElement;
+    }
+    return null;
   }
-  function show(el) {
-    el.classList.add('is-visible');           // CSS fallback / final state
-    if (typeof el.animate !== 'function') { el.style.opacity = '1'; el.style.transform = 'none'; return; }
-    el.animate(
-      [{ opacity: 0, transform: startTransform(el) }, { opacity: 1, transform: 'none' }],
-      { duration: 700, delay: delayFor(el), easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' }
-    ).addEventListener('finish', function () {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
+
+  function show(el, delay) {
+    el.classList.add('is-visible');
+    if (typeof el.animate !== 'function') return; // .is-visible alone is the fallback
+
+    el.style.willChange = 'opacity, transform';
+    var anim = el.animate(
+      [{ opacity: 0, transform: startTransform(el) },
+       { opacity: 1, transform: 'none' }],
+      { duration: DURATION, delay: delay, easing: EASING, fill: 'backwards' }
+    );
+    anim.addEventListener('finish', function () {
+      el.style.willChange = '';
+      anim.cancel(); // hand transform back to CSS (hover lifts, etc.)
     });
   }
 
-  // 3) Reveal on scroll into view (fallback: reveal everything immediately)
-  if (!('IntersectionObserver' in window)) { items.forEach(show); return; }
+  // 3) Reveal on scroll into view (no observer support: just show everything)
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function (el) { show(el, 0); });
+    return;
+  }
 
-  var isMobile = window.innerWidth < 768;
   var obs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { show(e.target); obs.unobserve(e.target); }
+    var batch = entries.filter(function (e) { return e.isIntersecting; });
+    if (!batch.length) return;
+
+    // Reading order: top to bottom, then left to right within the same row.
+    batch.sort(function (a, b) {
+      var dy = a.boundingClientRect.top - b.boundingClientRect.top;
+      if (Math.abs(dy) > 8) return dy;
+      return a.boundingClientRect.left - b.boundingClientRect.left;
     });
-  }, { threshold: 0.05, rootMargin: isMobile ? '0px 0px -10% 0px' : '0px 0px -15% 0px' });
+
+    // Expand each entry into the group it belongs to, keeping reading order
+    // and never revealing the same element twice.
+    var seen = [];
+    batch.forEach(function (e) {
+      var rail = railOf(e.target);
+      var group = rail
+        ? Array.prototype.slice.call(rail.querySelectorAll('.reveal'))
+        : [e.target];
+      group.forEach(function (el) {
+        if (seen.indexOf(el) === -1) seen.push(el);
+      });
+    });
+
+    seen.forEach(function (el, i) {
+      show(el, Math.min(i, MAX_STEPS) * STEP);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
 
   items.forEach(function (el) { obs.observe(el); });
 })();
