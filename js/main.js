@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 (function () {
   var DURATION  = 850;   // ms — length of one element's fade
   var STEP      = 110;   // ms — gap between consecutive elements in a batch
-  var MAX_STEPS = 6;     // cap the cascade so a big batch doesn't crawl
+  var MAX_TOTAL = 900;   // ms — longest a whole cascade may take end to end
   var SHIFT_Y   = 32;    // px of vertical travel
   var SHIFT_X   = 40;    // px of horizontal travel
   var EASING    = 'cubic-bezier(0.22, 1, 0.36, 1)';
@@ -451,8 +451,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Tighten the gap on long batches instead of clamping the index — clamping
+    // makes everything past the cap arrive at the same moment.
+    var step = Math.min(STEP, MAX_TOTAL / Math.max(seen.length - 1, 1));
     seen.forEach(function (el, i) {
-      show(el, Math.min(i, MAX_STEPS) * STEP);
+      show(el, Math.round(i * step));
       obs.unobserve(el);
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
