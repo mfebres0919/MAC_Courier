@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /* ===========================================================================
-   PROCESS TIMELINE — green line fills + nodes activate as you scroll
+   PROCESS TIMELINE — azure line fills + nodes activate as you scroll
 =========================================================================== */
 (function () {
   const timeline     = document.querySelector('.timeline');
@@ -307,6 +307,27 @@ document.addEventListener('DOMContentLoaded', () => {
     .filter(Boolean);
   if (!pairs.length) return;
 
+  // Sort by where the SECTIONS sit on the page, not by where their links sit
+  // in the navbar. update() below picks "the last section whose top has passed
+  // the line", which is only correct if we walk them in document order — and
+  // the nav order no longer matches it (About Us / Our Process / Why Choose Us
+  // are grouped under one dropdown, while on the page #why precedes #about).
+  pairs.sort(function (a, b) {
+    var rel = a.sec.compareDocumentPosition(b.sec);
+    if (rel & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+    if (rel & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+    return 0;
+  });
+
+  var dropParents = Array.prototype.slice
+    .call(document.querySelectorAll('.nav-links > li'))
+    .map(function (li) {
+      var toggle = li.querySelector('.nav-drop-toggle');
+      var menu   = li.querySelector('.nav-dropdown');
+      return (toggle && menu) ? { toggle: toggle, menu: menu } : null;
+    })
+    .filter(Boolean);
+
   var ticking = false;
 
   function update() {
@@ -317,8 +338,27 @@ document.addEventListener('DOMContentLoaded', () => {
       var top = p.sec.getBoundingClientRect().top + window.scrollY;
       if (top <= line) current = p; // last section whose top has passed the line
     });
+
+    // Once the page bottoms out, later sections can no longer reach the
+    // activation line, so the final link would never light up. Fall back to
+    // the last section that is actually on screen.
+    var atBottom = window.innerHeight + window.scrollY >=
+                   document.documentElement.scrollHeight - 2;
+    if (atBottom) {
+      var viewBottom = window.scrollY + window.innerHeight;
+      pairs.forEach(function (p) {
+        var top = p.sec.getBoundingClientRect().top + window.scrollY;
+        if (top <= viewBottom) current = p;
+      });
+    }
     spies.forEach(function (el) {
       el.classList.toggle('active', !!current && el === current.el);
+    });
+
+    // A section that lives inside a dropdown should also light up the parent
+    // toggle, otherwise the nav looks inert while you scroll through it.
+    dropParents.forEach(function (li) {
+      li.toggle.classList.toggle('active', !!li.menu.querySelector('a.active'));
     });
   }
 
